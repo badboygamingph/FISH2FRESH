@@ -1,0 +1,6 @@
+{
+  "name": "FISH2FRESH",
+  "description": "The official landing page for the FISH2FRESH offline mobile app, helping wet market customers classify tuna freshness.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
