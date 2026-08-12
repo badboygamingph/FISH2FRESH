@@ -1,15 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { lazy, Suspense } from 'react';
 import Layout from './components/Layout';
-import Home from './pages/Home';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import TermsOfService from './pages/TermsOfService';
-import Demo from './pages/Demo';
-import SpeciesDetail from './pages/SpeciesDetail';
 import ScrollToTop from './components/ScrollToTop';
 import { LanguageProvider } from './context/LanguageContext';
 import { DownloadProvider } from './context/DownloadContext';
 import { Toaster } from 'react-hot-toast';
+
+const Home = lazy(() => import('./pages/Home'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const Demo = lazy(() => import('./pages/Demo'));
+const SpeciesDetail = lazy(() => import('./pages/SpeciesDetail'));
 
 export default function App() {
   return (
@@ -28,13 +30,15 @@ export default function App() {
           <Router>
             <ScrollToTop />
             <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="/terms" element={<TermsOfService />} />
-                <Route path="/demo" element={<Demo />} />
-                <Route path="/species/:id" element={<SpeciesDetail />} />
-              </Routes>
+              <Suspense fallback={<div className="min-h-screen bg-slate-50"></div>}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/terms" element={<TermsOfService />} />
+                  <Route path="/demo" element={<Demo />} />
+                  <Route path="/species/:id" element={<SpeciesDetail />} />
+                </Routes>
+              </Suspense>
             </Layout>
           </Router>
           <Toaster 

@@ -6,7 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useDownload } from '../context/DownloadContext';
 import { ReactLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
-import logoImg from '../assets/images/logo.png';
+import logoImg from '../assets/images/logo.webp';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { language, toggleLanguage, t } = useLanguage();
@@ -124,13 +124,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <p className="text-sm leading-relaxed text-slate-600 max-w-sm">
                 {t.footer.desc}
               </p>
-              <div className="flex gap-4 pt-2">
-                <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-100 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
-                  <span className="sr-only">GitHub</span>
+              <div className="flex gap-4">
+                <a href="#" aria-label="GitHub" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-100 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
                   <Github className="h-5 w-5" aria-hidden="true" />
                 </a>
-                <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-500 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
-                  <span className="sr-only">LinkedIn</span>
+                <a href="#" aria-label="Twitter" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-500 hover:text-blue-400 hover:border-blue-200 hover:bg-blue-50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
+                  <Twitter className="h-5 w-5" aria-hidden="true" />
+                </a>
+                <a href="#" aria-label="LinkedIn" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-500 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
                   <Linkedin className="h-5 w-5" aria-hidden="true" />
                 </a>
               </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Eye, Waves, Sparkles, Beef, ImageIcon } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import anatomyImg from '../assets/images/fresh_fish_anatomy_1786286635448.jpg';
+import anatomyImg from '../assets/images/fresh_fish_anatomy_1786286635448.webp';
 
 function ImageWithSkeleton({ src, alt, className }: { src: string, alt: string, className: string }) {
   const [loaded, setLoaded] = useState(false);

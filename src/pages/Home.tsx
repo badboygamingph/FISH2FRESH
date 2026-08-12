@@ -1,21 +1,25 @@
+import { lazy, Suspense } from 'react';
 import Hero from '../components/Hero';
-import Features from '../components/Features';
-import VisualIndicators from '../components/VisualIndicators';
-import Species from '../components/Species';
-import HowItWorks from '../components/HowItWorks';
-import Team from '../components/Team';
-import FAQ from '../components/FAQ';
+
+const Features = lazy(() => import('../components/Features'));
+const VisualIndicators = lazy(() => import('../components/VisualIndicators'));
+const Species = lazy(() => import('../components/Species'));
+const HowItWorks = lazy(() => import('../components/HowItWorks'));
+const Team = lazy(() => import('../components/Team'));
+const FAQ = lazy(() => import('../components/FAQ'));
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Features />
-      <VisualIndicators />
-      <Species />
-      <HowItWorks />
-      <Team />
-      <FAQ />
+      <Suspense fallback={<div className="min-h-screen"></div>}>
+        <Features />
+        <VisualIndicators />
+        <Species />
+        <HowItWorks />
+        <Team />
+        <FAQ />
+      </Suspense>
     </>
   );
 }

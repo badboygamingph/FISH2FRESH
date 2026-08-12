@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { ArrowLeft, Tag, Activity, Scale, MapPin, Search, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import frigateImg from '../assets/images/frigate_tuna_1786286498933.jpg';
-import skipjackImg from '../assets/images/skipjack_tuna_1786286515562.jpg';
-import mackerelImg from '../assets/images/mackerel_tuna_1786286531308.jpg';
+import frigateImg from '../assets/images/frigate_tuna_1786286498933.webp';
+import skipjackImg from '../assets/images/skipjack_tuna_1786286515562.webp';
+import mackerelImg from '../assets/images/mackerel_tuna_1786286531308.webp';
 
 const speciesData = {
   'frigate-tuna': {
@@ -156,8 +156,10 @@ export default function SpeciesDetail() {
             <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6">
               <MapPin size={24} />
             </div>
-            <h3 className="text-xl font-bold mb-3">Natural Habitat</h3>
-            <p className="text-slate-400 leading-relaxed">{data.habitat}</p>
+            <div className="lg:w-2/3">
+              <h2 className="text-xl font-bold mb-3">Natural Habitat</h2>
+              <p className="text-slate-300 leading-relaxed text-lg">{data.habitat}</p>
+            </div>
           </motion.div>
 
           <motion.div 
@@ -170,9 +172,11 @@ export default function SpeciesDetail() {
             <div className="w-12 h-12 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 mb-6">
               <Scale size={24} />
             </div>
-            <h3 className="text-xl font-bold mb-3">Size & Weight</h3>
-            <p className="text-slate-400 leading-relaxed mb-2"><span className="text-slate-200 font-semibold">Size:</span> {data.size}</p>
-            <p className="text-slate-400 leading-relaxed"><span className="text-slate-200 font-semibold">Weight:</span> {data.weight}</p>
+            <div className="lg:w-2/3">
+              <h2 className="text-xl font-bold mb-3">Size & Weight</h2>
+              <p className="text-slate-300 leading-relaxed text-lg"><span className="text-slate-200 font-semibold">Size:</span> {data.size}</p>
+              <p className="text-slate-400 leading-relaxed"><span className="text-slate-200 font-semibold">Weight:</span> {data.weight}</p>
+            </div>
           </motion.div>
 
           <motion.div 
@@ -185,8 +189,10 @@ export default function SpeciesDetail() {
             <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6">
               <Activity size={24} />
             </div>
-            <h3 className="text-xl font-bold mb-3">Market Importance</h3>
-            <p className="text-slate-400 leading-relaxed">Highly valued in wet markets for its affordability and high protein content. Best consumed fresh.</p>
+            <div className="lg:w-2/3">
+              <h2 className="text-xl font-bold mb-3">Market Importance</h2>
+              <p className="text-slate-300 leading-relaxed text-lg">Highly valued in wet markets for its affordability and high protein content. Best consumed fresh.</p>
+            </div>
           </motion.div>
 
         </div>

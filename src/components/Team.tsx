@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Github, Linkedin, Mail, Sparkles } from 'lucide-react';
 
 import Aurora from './Aurora';
-import darielImg from '../assets/images/leiradnoznag.png';
+import darielImg from '../assets/images/leiradnoznag.webp';
 
 const teamMembers = [
   {
@@ -82,6 +82,7 @@ export default function Team() {
               <img 
                 src={member.image} 
                 alt={member.name} 
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
               />
               
@@ -101,17 +102,17 @@ export default function Team() {
                     
                     <div className="flex items-center gap-4 pt-4 border-t border-white/20">
                       {member.socials.github && (
-                        <a href={member.socials.github} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-white transition-colors hover:scale-110">
+                        <a href={member.socials.github} aria-label={`${member.name} GitHub`} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-white transition-colors hover:scale-110">
                           <Github size={20} />
                         </a>
                       )}
                       {member.socials.linkedin && (
-                        <a href={member.socials.linkedin} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-blue-400 transition-colors hover:scale-110">
+                        <a href={member.socials.linkedin} aria-label={`${member.name} LinkedIn`} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-blue-400 transition-colors hover:scale-110">
                           <Linkedin size={20} />
                         </a>
                       )}
                       {member.socials.mail && (
-                        <a href={member.socials.mail} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-red-400 transition-colors hover:scale-110">
+                        <a href={member.socials.mail} aria-label={`Email ${member.name}`} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-red-400 transition-colors hover:scale-110">
                           <Mail size={20} />
                         </a>
                       )}

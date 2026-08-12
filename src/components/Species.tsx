@@ -4,9 +4,9 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import { Tag, CheckCircle2, ImageIcon, MoveHorizontal, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import DotField from './DotField';
-import frigateImg from '../assets/images/frigate_tuna_1786286498933.jpg';
-import skipjackImg from '../assets/images/skipjack_tuna_1786286515562.jpg';
-import mackerelImg from '../assets/images/mackerel_tuna_1786286531308.jpg';
+import frigateImg from '../assets/images/frigate_tuna_1786286498933.webp';
+import skipjackImg from '../assets/images/skipjack_tuna_1786286515562.webp';
+import mackerelImg from '../assets/images/mackerel_tuna_1786286531308.webp';
 
 function ImageWithSkeleton({ src, alt, className }: { src: string, alt: string, className: string }) {
   const [loaded, setLoaded] = useState(false);
@@ -150,10 +150,11 @@ export default function Species() {
                   {/* Image Side - Full Bleed */}
                   <div className="w-full lg:w-[45%] relative aspect-[4/3] lg:aspect-auto lg:min-h-[460px] overflow-hidden shrink-0 bg-slate-800">
                     <div className={`absolute inset-0 z-10 opacity-20 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-10 ${species.accentColor}`}></div>
-                    <ImageWithSkeleton 
+                    <img 
                       src={species.image} 
                       alt={species.name} 
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      className="absolute w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                   </div>
                 

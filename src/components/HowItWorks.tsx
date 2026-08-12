@@ -118,17 +118,19 @@ export default function HowItWorks() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.8 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-12 md:mb-16"
           >
-            <h4 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-50 text-blue-700 font-semibold text-sm tracking-wide mb-4 md:mb-6">
-              {t.howItWorks.analysis}
-            </h4>
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tighter text-slate-900 px-2">{t.howItWorks.classTitle}</h3>
-            
-            {/* Mobile Swipe Indicator */}
-            <div className="flex items-center justify-center gap-2 mt-6 lg:hidden text-slate-500 text-sm font-medium animate-pulse">
-              <MoveHorizontal size={16} className="opacity-70" />
-              <span>Swipe to explore</span>
+            <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-24">
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-blue-50 text-blue-700 font-semibold text-sm tracking-wide mb-4 md:mb-6">
+                <Brain size={16} className="text-blue-600" />
+                <span>{t.howItWorks.analysis}</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tighter text-slate-900 px-2">{t.howItWorks.classTitle}</h2>
+              
+              {/* Mobile Swipe Indicator */}
+              <div className="flex items-center justify-center gap-2 mt-6 lg:hidden text-slate-500 text-sm font-medium animate-pulse">
+                <MoveHorizontal size={16} className="opacity-70" />
+                <span>Swipe to explore</span>
+              </div>
             </div>
           </motion.div>
           <div className="flex overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory lg:grid lg:grid-cols-3 gap-6 md:gap-8 lg:overflow-visible lg:pb-0 lg:mx-0 lg:px-0 lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none]">
@@ -143,10 +145,10 @@ export default function HowItWorks() {
                 <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm">
                   <CheckCircle2 size={32} strokeWidth={1.5} />
                 </div>
-                <h5 className="font-bold text-slate-900 text-2xl tracking-tight mb-4 flex items-center gap-3">
+                <h3 className="font-bold text-slate-900 text-2xl tracking-tight mb-4 flex items-center gap-3">
                   {t.howItWorks.c1_title}
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)] animate-pulse"></span>
-                </h5>
+                </h3>
                 <p className="text-slate-700 font-light leading-relaxed text-lg">
                   {t.howItWorks.c1_desc}
                 </p>
@@ -162,10 +164,10 @@ export default function HowItWorks() {
                 <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm">
                   <AlertTriangle size={32} strokeWidth={1.5} />
                 </div>
-                <h5 className="font-bold text-slate-900 text-2xl tracking-tight mb-4 flex items-center gap-3">
+                <h3 className="font-bold text-slate-900 text-2xl tracking-tight mb-4 flex items-center gap-3">
                   {t.howItWorks.c2_title}
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.8)] animate-pulse"></span>
-                </h5>
+                </h3>
                 <p className="text-slate-700 font-light leading-relaxed text-lg">
                   {t.howItWorks.c2_desc}
                 </p>
@@ -179,12 +181,14 @@ export default function HowItWorks() {
                 className="min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-center group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(244,63,94,0.15)] hover:border-rose-200 transition-all duration-300"
              >
                 <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm">
-                  <XCircle size={32} strokeWidth={1.5} />
+                  <div className="p-6 md:p-8 flex flex-col justify-center relative z-10">
+                    <XCircle size={32} strokeWidth={1.5} />
+                  </div>
                 </div>
-                <h5 className="font-bold text-slate-900 text-2xl tracking-tight mb-4 flex items-center gap-3">
+                <h3 className="font-bold text-slate-900 text-2xl tracking-tight mb-4 flex items-center gap-3">
                   {t.howItWorks.c3_title}
                   <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.8)] animate-pulse"></span>
-                </h5>
+                </h3>
                 <p className="text-slate-700 font-light leading-relaxed text-lg">
                   {t.howItWorks.c3_desc}
                 </p>
