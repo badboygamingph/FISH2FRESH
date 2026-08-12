@@ -1,7 +1,7 @@
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import { Languages, Menu, X, Github, Linkedin } from 'lucide-react';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useDownload } from '../context/DownloadContext';
 import { ReactLenis } from 'lenis/react';
@@ -12,6 +12,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { language, toggleLanguage, t } = useLanguage();
   const { startDownload } = useDownload();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    if (location.pathname === '/') {
+      e.preventDefault();
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMobileMenuOpen(false);
+  };
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -38,11 +50,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-10 font-medium text-slate-700 text-sm tracking-wide" aria-label="Desktop navigation">
-            <a href="/#features" className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.features}</a>
-            <a href="/#indicators" className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.analysis}</a>
-            <a href="/#species" className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.species}</a>
-            <a href="/#how-it-works" className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.howItWorks}</a>
-            <a href="/#faq" className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.faq}</a>
+            <a href="/#features" onClick={(e) => handleNavClick(e, 'features')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.features}</a>
+            <a href="/#indicators" onClick={(e) => handleNavClick(e, 'indicators')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.analysis}</a>
+            <a href="/#species" onClick={(e) => handleNavClick(e, 'species')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.species}</a>
+            <a href="/#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.howItWorks}</a>
+            <a href="/#faq" onClick={(e) => handleNavClick(e, 'faq')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.faq}</a>
           </nav>
           
           <div className="flex items-center gap-2 md:gap-4">
@@ -79,11 +91,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="lg:hidden bg-white border-b border-slate-200 overflow-hidden"
             >
               <nav className="flex flex-col px-6 py-4 gap-4 font-medium text-slate-700" aria-label="Mobile navigation">
-                <a href="/#features" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.features}</a>
-                <a href="/#indicators" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.analysis}</a>
-                <a href="/#species" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.species}</a>
-                <a href="/#how-it-works" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.howItWorks}</a>
-                <a href="/#faq" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.faq}</a>
+                <a href="/#features" onClick={(e) => handleNavClick(e, 'features')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.features}</a>
+                <a href="/#indicators" onClick={(e) => handleNavClick(e, 'indicators')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.analysis}</a>
+                <a href="/#species" onClick={(e) => handleNavClick(e, 'species')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.species}</a>
+                <a href="/#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.howItWorks}</a>
+                <a href="/#faq" onClick={(e) => handleNavClick(e, 'faq')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.faq}</a>
                 <button onClick={() => { setIsMobileMenuOpen(false); startDownload(); }} className="sm:hidden w-full bg-slate-900 text-white px-6 py-3 rounded-full font-semibold mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2" aria-label={t.nav.getApp}>
                   {t.nav.getApp}
                 </button>
@@ -128,9 +140,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className="text-sm font-bold tracking-wider text-slate-900 uppercase">{t.footer.product}</h3>
               <ul role="list" className="mt-6 space-y-4">
-                <li><a href="/#features" className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.features}</a></li>
-                <li><a href="/#how-it-works" className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.howItWorks}</a></li>
-                <li><a href="/#species" className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.species}</a></li>
+                <li><a href="/#features" onClick={(e) => handleNavClick(e, 'features')} className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.features}</a></li>
+                <li><a href="/#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')} className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.howItWorks}</a></li>
+                <li><a href="/#species" onClick={(e) => handleNavClick(e, 'species')} className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.species}</a></li>
               </ul>
             </div>
 
