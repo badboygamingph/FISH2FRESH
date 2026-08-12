@@ -131,7 +131,7 @@ export default function Species() {
               >
                 <div className="flex flex-col md:flex-row bg-slate-900/60 backdrop-blur-2xl rounded-2xl md:rounded-3xl border border-white/10 overflow-hidden group hover:bg-slate-900/80 hover:border-white/20 transition-all duration-500 shadow-2xl h-full">
                   {/* Image Side */}
-                  <div className="w-full md:w-[45%] relative aspect-[4/3] md:aspect-auto md:min-h-[460px] overflow-hidden shrink-0 bg-slate-800">
+                  <div className="w-full md:w-[45%] relative aspect-[2/1] sm:aspect-[4/3] md:aspect-auto md:min-h-[460px] overflow-hidden shrink-0 bg-slate-800">
                     <div className={`absolute inset-0 z-10 opacity-20 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-10 ${species.accentColor}`}></div>
                     <img 
                       src={species.image} 
@@ -139,42 +139,42 @@ export default function Species() {
                       loading="lazy"
                       className="absolute w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
                     />
-                    <div className="absolute top-6 left-6 text-white/30 font-black text-5xl italic leading-none drop-shadow-lg z-20">
+                    <div className="absolute top-4 left-4 md:top-6 md:left-6 text-white/30 font-black text-3xl md:text-5xl italic leading-none drop-shadow-lg z-20">
                       0{index + 1}
                     </div>
                   </div>
                 
                   {/* Content Side */}
-                  <div className="w-full md:w-[55%] p-6 sm:p-8 md:p-10 flex flex-col justify-center">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                      <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white uppercase">{species.name}</h3>
-                      <div className={`self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full ${species.badgeBg} ${species.badgeText} text-xs font-semibold tracking-wide border border-white/10 shadow-sm`}>
+                  <div className="w-full md:w-[55%] p-4 sm:p-6 md:p-10 flex flex-col justify-center">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 md:gap-3 mb-3 md:mb-4">
+                      <h3 className="text-xl sm:text-2xl md:text-4xl font-bold tracking-tight text-white uppercase">{species.name}</h3>
+                      <div className={`self-start sm:self-auto flex items-center gap-1.5 px-2 md:px-3 py-1 md:py-1.5 rounded-full ${species.badgeBg} ${species.badgeText} text-[10px] md:text-xs font-semibold tracking-wide border border-white/10 shadow-sm`}>
                         <Tag size={12} />
                         {species.localName}
                       </div>
                     </div>
                     
-                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8 font-light">
+                    <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed mb-4 md:mb-8 font-light">
                       {species.description}
                     </p>
                     
-                    <div className="pt-6 border-t border-slate-700/50 mt-auto">
-                      <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">{t.species.keyId}</h4>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                    <div className="pt-4 md:pt-6 border-t border-slate-700/50 mt-auto">
+                      <h4 className="text-[10px] md:text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3 md:mb-4">{t.species.keyId}</h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 mb-4 md:mb-8">
                         {species.traits.map((trait, i) => (
-                          <li key={i} className="flex items-start gap-2.5">
-                            <CheckCircle2 size={16} className={`shrink-0 mt-0.5 ${species.iconColor}`} />
-                            <span className="text-slate-300 text-sm leading-relaxed font-medium">{trait}</span>
+                          <li key={i} className="flex items-start gap-2 md:gap-2.5">
+                            <CheckCircle2 size={14} className={`shrink-0 mt-0.5 md:mt-0 ${species.iconColor} md:w-4 md:h-4`} />
+                            <span className="text-slate-300 text-xs md:text-sm leading-relaxed font-medium">{trait}</span>
                           </li>
                         ))}
                       </ul>
                       <Link
                         to={`/species/${species.id}`}
                         onClick={() => window.scrollTo(0, 0)}
-                        className={`inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white ${species.accentColor} hover:brightness-110 shadow-lg rounded-xl px-5 py-2.5 w-full sm:w-fit justify-center transition-all duration-300 hover:pr-3 group/btn`}
+                        className={`inline-flex items-center gap-2 text-xs md:text-sm font-semibold tracking-wide text-white ${species.accentColor} hover:brightness-110 shadow-lg rounded-xl px-4 py-2 md:px-5 md:py-2.5 w-full sm:w-fit justify-center transition-all duration-300 hover:pr-3 group/btn`}
                       >
                         Read Full Details
-                        <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                        <ArrowRight size={14} className="md:w-4 md:h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
                       </Link>
                     </div>
                   </div>
