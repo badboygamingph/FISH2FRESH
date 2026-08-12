@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
-import { Languages, Menu, X, Github, Linkedin } from 'lucide-react';
+import { Languages, Menu, X, Github, Linkedin, Twitter } from 'lucide-react';
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
