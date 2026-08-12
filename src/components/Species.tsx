@@ -1,41 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
-import { Tag, CheckCircle2, ImageIcon, MoveHorizontal, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { Tag, CheckCircle2, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import DotField from './DotField';
+
 import frigateImg from '../assets/images/frigate_tuna_1786286498933.webp';
 import skipjackImg from '../assets/images/skipjack_tuna_1786286515562.webp';
 import mackerelImg from '../assets/images/mackerel_tuna_1786286531308.webp';
 
-function ImageWithSkeleton({ src, alt, className }: { src: string, alt: string, className: string }) {
-  const [loaded, setLoaded] = useState(false);
-
-  return (
-    <>
-      {!loaded && (
-        <div className="absolute inset-0 z-0 bg-slate-800 animate-pulse flex items-center justify-center">
-          <ImageIcon className="text-slate-700" size={32} />
-        </div>
-      )}
-      <img 
-        src={src} 
-        alt={alt} 
-        className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
-        referrerPolicy="no-referrer"
-        onLoad={() => setLoaded(true)}
-      />
-    </>
-  );
-}
-
 export default function Species() {
   const { t } = useLanguage();
-  const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLElement>(null);
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end end"]
   });
   
   const speciesList = [
@@ -89,142 +69,129 @@ export default function Species() {
     }
   ];
 
-  return (
-    <section ref={containerRef} id="species" className="relative py-16 md:py-24 bg-slate-900 text-white overflow-hidden">
-      {/* Interactive Dot Field Background */}
-      <div className="absolute inset-0 z-0 opacity-70 pointer-events-auto">
-        <DotField
-          dotRadius={1.5}
-          dotSpacing={14}
-          bulgeStrength={67}
-          glowRadius={250}
-          sparkle={true}
-          waveAmplitude={0}
-          gradientFrom="rgba(56, 189, 248, 0.4)" /* sky-400 */
-          gradientTo="rgba(99, 102, 241, 0.25)"  /* indigo-500 */
-          glowColor="#1e3a8a" /* blue-900 */
-        />
-      </div>
+  // Map scroll progress to horizontal translation
+  // This smoothly moves the track from 0 to exactly the end of the content
+  const trackX = useTransform(scrollYProgress, (v) => `calc(${-v * 100}% + ${v * 100}vw)`);
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="mb-12 md:mb-16 text-center md:text-left">
+  return (
+    <section ref={containerRef} id="species" className="relative h-[400vh] bg-slate-900 text-white">
+      {/* Sticky Inner Container */}
+      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden">
+        
+        {/* Background Dot Field */}
+        <div className="absolute inset-0 z-0 opacity-70 pointer-events-none">
+          <DotField
+            dotRadius={1.5}
+            dotSpacing={14}
+            bulgeStrength={67}
+            glowRadius={250}
+            sparkle={true}
+            waveAmplitude={0}
+            gradientFrom="rgba(56, 189, 248, 0.4)" /* sky-400 */
+            gradientTo="rgba(99, 102, 241, 0.25)"  /* indigo-500 */
+            glowColor="#1e3a8a" /* blue-900 */
+          />
+        </div>
+
+        {/* Header Content */}
+        <div className="container mx-auto px-6 mb-8 md:mb-12 relative z-10 text-center md:text-left pt-20">
           <motion.h2 
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, type: "spring" }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tighter"
           >
             {t.species.title}
           </motion.h2>
           <motion.p 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto md:mx-0"
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto md:mx-0 font-light"
           >
             {t.species.desc}
           </motion.p>
-          
-          {/* Mobile Swipe Indicator (Optional for pagination) */}
-          <div className="flex items-center justify-center md:justify-start gap-2 mt-6 lg:hidden text-slate-400 text-sm font-medium">
-            <span>Select species below</span>
+          <div className="flex items-center justify-center md:justify-start gap-4 mt-6">
+            <span className="text-xs text-cyan-400 uppercase tracking-widest font-bold">Scroll down to view species</span>
+            <div className="h-[1px] w-12 bg-cyan-500/50"></div>
           </div>
         </div>
 
-        <div className="relative">
-          <AnimatePresence mode="wait">
-            {speciesList.map((species, index) => {
-              if (index !== activeIndex) return null;
-              
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className={`flex flex-col lg:flex-row bg-slate-900/40 backdrop-blur-2xl rounded-2xl lg:rounded-3xl border border-white/10 overflow-hidden group hover:bg-slate-900/60 hover:border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 shadow-2xl relative z-10 w-full max-w-5xl mx-auto`}
-                >
-                  {/* Image Side - Full Bleed */}
-                  <div className="w-full lg:w-[45%] relative aspect-[4/3] lg:aspect-auto lg:min-h-[460px] overflow-hidden shrink-0 bg-slate-800">
+        {/* Horizontal Sliding Track */}
+        <div className="relative z-10 w-full overflow-hidden">
+          <motion.div 
+            style={{ x: trackX }}
+            className="flex gap-6 md:gap-12 px-6 md:px-[5vw] w-[max-content]"
+          >
+            {speciesList.map((species, index) => (
+              <div 
+                key={index}
+                className="w-[85vw] sm:w-[500px] md:w-[900px] shrink-0"
+              >
+                <div className="flex flex-col md:flex-row bg-slate-900/60 backdrop-blur-2xl rounded-2xl md:rounded-3xl border border-white/10 overflow-hidden group hover:bg-slate-900/80 hover:border-white/20 transition-all duration-500 shadow-2xl h-full">
+                  {/* Image Side */}
+                  <div className="w-full md:w-[45%] relative aspect-[4/3] md:aspect-auto md:min-h-[460px] overflow-hidden shrink-0 bg-slate-800">
                     <div className={`absolute inset-0 z-10 opacity-20 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-10 ${species.accentColor}`}></div>
                     <img 
                       src={species.image} 
                       alt={species.name} 
                       loading="lazy"
-                      className="absolute w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="absolute w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
                     />
-                  </div>
-                
-                {/* Content Side */}
-                <div className="w-full lg:w-[55%] p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">{species.name}</h3>
-                    <div className={`self-start sm:self-auto flex items-center gap-1.5 px-2.5 py-1 rounded-full ${species.badgeBg} ${species.badgeText} text-[11px] sm:text-xs font-semibold tracking-wide border border-white/10 shadow-sm`}>
-                      <Tag size={12} />
-                      {species.localName}
+                    <div className="absolute top-6 left-6 text-white/30 font-black text-5xl italic leading-none drop-shadow-lg z-20">
+                      0{index + 1}
                     </div>
                   </div>
-                  
-                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-light">
-                    {species.description}
-                  </p>
-                  
-                  <div className="pt-5 sm:pt-6 border-t border-slate-700/50 mt-auto">
-                    <h4 className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3 sm:mb-4">{t.species.keyId}</h4>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
-                      {species.traits.map((trait, i) => (
-                        <li key={i} className="flex items-start gap-2.5">
-                          <CheckCircle2 size={16} className={`shrink-0 mt-0.5 ${species.iconColor}`} />
-                          <span className="text-slate-300 text-xs sm:text-sm leading-relaxed font-medium">{trait}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Link
-                      to={`/species/${species.id}`}
-                      onClick={() => window.scrollTo(0, 0)}
-                      className={`inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white ${species.accentColor} hover:brightness-110 shadow-lg rounded-xl px-5 py-2.5 w-full sm:w-fit justify-center transition-all duration-300 hover:pr-3 group/btn`}
-                    >
-                      Read Full Details
-                      <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
-                    </Link>
+                
+                  {/* Content Side */}
+                  <div className="w-full md:w-[55%] p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                      <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-white uppercase">{species.name}</h3>
+                      <div className={`self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full ${species.badgeBg} ${species.badgeText} text-xs font-semibold tracking-wide border border-white/10 shadow-sm`}>
+                        <Tag size={12} />
+                        {species.localName}
+                      </div>
+                    </div>
+                    
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8 font-light">
+                      {species.description}
+                    </p>
+                    
+                    <div className="pt-6 border-t border-slate-700/50 mt-auto">
+                      <h4 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">{t.species.keyId}</h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                        {species.traits.map((trait, i) => (
+                          <li key={i} className="flex items-start gap-2.5">
+                            <CheckCircle2 size={16} className={`shrink-0 mt-0.5 ${species.iconColor}`} />
+                            <span className="text-slate-300 text-sm leading-relaxed font-medium">{trait}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Link
+                        to={`/species/${species.id}`}
+                        onClick={() => window.scrollTo(0, 0)}
+                        className={`inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white ${species.accentColor} hover:brightness-110 shadow-lg rounded-xl px-5 py-2.5 w-full sm:w-fit justify-center transition-all duration-300 hover:pr-3 group/btn`}
+                      >
+                        Read Full Details
+                        <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            );
-          })}
-          </AnimatePresence>
-          
-          {/* Pagination Controls */}
-          <div className="flex justify-center items-center gap-6 mt-10 relative z-20">
-            <button 
-              onClick={() => setActiveIndex((prev) => (prev === 0 ? speciesList.length - 1 : prev - 1))}
-              className="p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all"
-              aria-label="Previous species"
-            >
-              <ChevronLeft size={24} />
-            </button>
-            <div className="flex items-center gap-3">
-              {speciesList.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveIndex(i)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${i === activeIndex ? 'bg-white scale-125' : 'bg-white/30 hover:bg-white/50'}`}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              ))}
-            </div>
-            <button 
-              onClick={() => setActiveIndex((prev) => (prev === speciesList.length - 1 ? 0 : prev + 1))}
-              className="p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all"
-              aria-label="Next species"
-            >
-              <ChevronRight size={24} />
-            </button>
-          </div>
+              </div>
+            ))}
+          </motion.div>
         </div>
+
+        {/* Bottom Progress Bar */}
+        <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 w-48 h-[2px] bg-white/10 z-50 overflow-hidden rounded-full">
+          <motion.div 
+            className="h-full bg-cyan-500 origin-left"
+            style={{ scaleX: scrollYProgress }}
+          />
+        </div>
+
       </div>
     </section>
   );
