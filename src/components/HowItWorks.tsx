@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'motion/react';
-import { Camera, ScanSearch, CheckSquare, CheckCircle2, AlertTriangle, XCircle, MoveHorizontal } from 'lucide-react';
+import { Camera, ScanSearch, CheckSquare, CheckCircle2, AlertTriangle, XCircle, MoveHorizontal, Brain } from 'lucide-react';
 import React, { useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import DotGrid from './DotGrid';
