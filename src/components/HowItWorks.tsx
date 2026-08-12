@@ -133,7 +133,7 @@ export default function HowItWorks() {
 
             {/* Right Side: Scrolling Text */}
             <div className="flex-1 w-full relative h-[35vh] md:h-[60vh] flex items-center justify-center lg:justify-start">
-              <div className="relative w-full max-w-md">
+              <div className="relative w-full h-full max-w-md">
                 {steps.map((step, index) => (
                   <motion.div
                     key={index}
