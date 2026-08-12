@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Github, Linkedin, Mail, Sparkles } from 'lucide-react';
+import { Facebook, Mail, Sparkles } from 'lucide-react';
 
 import Aurora from './Aurora';
 import darielImg from '../assets/images/leiradnoznag.webp';
@@ -11,14 +11,14 @@ const teamMembers = [
     role: 'System Developer',
     image: darielImg,
     bio: 'Architected and built the entire FISH2FRESH ecosystem, integrating on-device AI with a modern web interface.',
-    socials: { github: '#', linkedin: '#', mail: '#' }
+    socials: { facebook: '#', mail: '#' }
   },
   {
     name: 'Jan Clyde Villavelez',
     role: 'Project Assistant',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop',
     bio: 'Provides essential support in organizing project milestones, user experience testing, and system analysis.',
-    socials: { linkedin: '#', mail: '#' }
+    socials: { facebook: '#', mail: '#' }
   }
 ];
 
@@ -101,14 +101,9 @@ export default function Team() {
                     </p>
                     
                     <div className="flex items-center gap-4 pt-4 border-t border-white/20">
-                      {member.socials.github && (
-                        <a href={member.socials.github} aria-label={`${member.name} GitHub`} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-white transition-colors hover:scale-110">
-                          <Github size={20} />
-                        </a>
-                      )}
-                      {member.socials.linkedin && (
-                        <a href={member.socials.linkedin} aria-label={`${member.name} LinkedIn`} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-blue-400 transition-colors hover:scale-110">
-                          <Linkedin size={20} />
+                      {member.socials.facebook && (
+                        <a href={member.socials.facebook} aria-label={`${member.name} Facebook`} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-blue-500 transition-colors hover:scale-110">
+                          <Facebook size={20} />
                         </a>
                       )}
                       {member.socials.mail && (
