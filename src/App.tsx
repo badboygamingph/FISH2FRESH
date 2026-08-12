@@ -17,13 +17,13 @@ export default function App() {
       <LanguageProvider>
         <DownloadProvider>
           <Helmet>
-            <title>FISH2FRESH | AI Fish Freshness Detection</title>
-            <meta name="description" content="Use FISH2FRESH's on-device AI model to classify fish freshness in real-time. Completely offline, secure, and private." />
-            <link rel="canonical" href="https://fish2fresh.example.com" />
-            <meta property="og:title" content="FISH2FRESH | AI Fish Freshness Detection" />
-            <meta property="og:description" content="Use FISH2FRESH's on-device AI model to classify fish freshness in real-time. Completely offline, secure, and private." />
+            <title>FISH2FRESH (Fish 2 Fresh) | AI Fish Freshness Detection</title>
+            <meta name="description" content="Use FISH2FRESH (also known as Fish 2 Fresh) on-device AI model to classify fish freshness in real-time. Completely offline, secure, and private." />
+            <link rel="canonical" href="https://fish2fresh.vercel.app/" />
+            <meta property="og:title" content="FISH2FRESH (Fish 2 Fresh) | AI Fish Freshness Detection" />
+            <meta property="og:description" content="Use FISH2FRESH (also known as Fish 2 Fresh) on-device AI model to classify fish freshness in real-time. Completely offline, secure, and private." />
             <meta property="og:type" content="website" />
-            <meta property="og:url" content="https://fish2fresh.example.com" />
+            <meta property="og:url" content="https://fish2fresh.vercel.app/" />
           </Helmet>
           <Router>
             <ScrollToTop />

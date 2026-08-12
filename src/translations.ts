@@ -12,7 +12,7 @@ export const translations = {
       title1: 'Never Buy',
       title2: 'Spoiled Fish',
       title3: 'at the Market Again.',
-      desc1: 'FISH2FRESH uses advanced on-device AI to classify the freshness of Frigate, Skipjack, and Mackerel Tuna instantly.',
+      desc1: 'FISH2FRESH (Fish 2 Fresh) uses advanced on-device AI to classify the freshness of Frigate, Skipjack, and Mackerel Tuna instantly.',
       desc2: 'No internet required.',
       download: 'Download for Android',
       demo: 'View Demo',
