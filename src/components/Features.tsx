@@ -39,15 +39,15 @@ export default function Features() {
       </div>
 
       {/* Abstract Background Shapes for Glass Effect */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2 z-0"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 translate-x-1/2 translate-y-1/2 z-0"></div>
+      <div className="absolute top-0 left-0 w-96 h-96 opacity-50 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none mix-blend-multiply" style={{ background: 'radial-gradient(circle, rgba(219,234,254,1) 0%, transparent 70%)' }}></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 opacity-50 translate-x-1/2 translate-y-1/2 z-0 pointer-events-none mix-blend-multiply" style={{ background: 'radial-gradient(circle, rgba(207,250,254,1) 0%, transparent 70%)' }}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, type: "spring", bounce: 0.4 }}
             className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
           >
@@ -56,7 +56,7 @@ export default function Features() {
           <motion.p 
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, type: "spring", bounce: 0.4, delay: 0.1 }}
             className="text-base md:text-lg text-slate-700 px-2"
           >
@@ -72,7 +72,7 @@ export default function Features() {
                 key={index}
                 initial={{ opacity: 0, y: 60, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.3, margin: "0px 0px -50px 0px" }}
+                viewport={{ once: true, amount: 0.3, margin: "0px 0px -50px 0px" }}
                 transition={{ duration: 0.8, type: "spring", bounce: 0.3, delay: index * 0.1 + 0.1 }}
                 className="relative z-10 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white/40 backdrop-blur-2xl border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:bg-white/60 hover:border-white hover:shadow-[0_8px_30px_rgba(59,130,246,0.12)] hover:-translate-y-2 transition-all duration-300"
               >

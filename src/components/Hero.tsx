@@ -65,9 +65,8 @@ export default function Hero() {
   return (
     <section ref={heroRef} className="relative overflow-hidden bg-slate-50 pt-24 pb-32 md:pt-32 lg:pt-40 lg:pb-48">
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -inset-[50%] opacity-60 animate-aurora mix-blend-multiply" style={{
-          backgroundImage: 'radial-gradient(circle at 50% 50%, #bae6fd 0%, transparent 50%), radial-gradient(circle at 80% 20%, #a7f3d0 0%, transparent 50%), radial-gradient(circle at 20% 80%, #bfdbfe 0%, transparent 50%)',
-          filter: 'blur(80px)'
+        <div className="absolute -inset-[50%] opacity-60 animate-aurora mix-blend-multiply pointer-events-none" style={{
+          backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(186,230,253,0.8) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(167,243,208,0.8) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(191,219,254,0.8) 0%, transparent 50%)'
         }}></div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
@@ -114,7 +113,7 @@ export default function Hero() {
             className="relative lg:ml-auto flex justify-center mt-10 lg:mt-0 z-10"
           >
             {/* Abstract Background Shape */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-blue-400/20 rounded-full blur-3xl opacity-60 z-0"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] opacity-60 z-0 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(96,165,250,0.2) 0%, transparent 70%)' }}></div>
             
             {/* Phone CSS Mockup with inner float */}
             <motion.div 

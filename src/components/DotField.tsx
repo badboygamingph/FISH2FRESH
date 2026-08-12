@@ -43,6 +43,7 @@ const DotField = memo(({
   const sizeRef = useRef({ w: 0, h: 0, offsetX: 0, offsetY: 0 });
   const glowOpacity = useRef(0);
   const engagement = useRef(0);
+  const isVisible = useRef(false);
   const propsRef = useRef<any>({});
   
   propsRef.current = { dotRadius, dotSpacing, cursorRadius, cursorForce, bulgeOnly, bulgeStrength, sparkle, waveAmplitude, gradientFrom, gradientTo };
@@ -58,6 +59,11 @@ const DotField = memo(({
     
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let resizeTimer: any;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible.current = entry.isIntersecting;
+    }, { rootMargin: '200px' });
+    if (canvas) observer.observe(canvas);
 
     function resize() {
       clearTimeout(resizeTimer);
@@ -129,6 +135,10 @@ const DotField = memo(({
     let frameCount = 0;
 
     function tick() {
+      if (!isVisible.current) {
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
       frameCount++;
       const dots = dotsRef.current;
       const m = mouseRef.current;
@@ -236,6 +246,7 @@ const DotField = memo(({
     };
 
     return () => {
+      observer.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       clearInterval(speedInterval);
       clearTimeout(resizeTimer);

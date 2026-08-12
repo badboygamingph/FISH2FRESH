@@ -170,8 +170,12 @@ export default function Aurora(props: any) {
     ctn.appendChild(gl.canvas);
 
     let animateId = 0;
+    let isVisible = true;
+    let isPageVisible = !document.hidden;
+
     const update = (t: number) => {
-      animateId = requestAnimationFrame(update);
+      if (!isVisible || !isPageVisible) return;
+      
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
       program.uniforms.uTime.value = time * speed * 0.1;
       program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;
@@ -182,13 +186,45 @@ export default function Aurora(props: any) {
         return [c.r, c.g, c.b];
       });
       renderer.render({ scene: mesh });
+      animateId = requestAnimationFrame(update);
     };
-    animateId = requestAnimationFrame(update);
+
+    const tryStart = () => {
+      if (isVisible && isPageVisible && !animateId) {
+        animateId = requestAnimationFrame(update);
+      }
+    };
+
+    const tryStop = () => {
+      if (animateId) {
+        cancelAnimationFrame(animateId);
+        animateId = 0;
+      }
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        isVisible ? tryStart() : tryStop();
+      },
+      { threshold: 0 }
+    );
+    io.observe(ctn);
+
+    const onVisibility = () => {
+      isPageVisible = !document.hidden;
+      isPageVisible ? tryStart() : tryStop();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    tryStart();
 
     resize();
 
     return () => {
-      cancelAnimationFrame(animateId);
+      tryStop();
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', resize);
       if (ctn && gl.canvas.parentNode === ctn) {
         ctn.removeChild(gl.canvas);

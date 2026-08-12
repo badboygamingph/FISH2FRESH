@@ -70,7 +70,7 @@ export default function VisualIndicators() {
           <motion.h2 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tighter text-slate-900 mb-4 md:mb-6"
           >
@@ -79,7 +79,7 @@ export default function VisualIndicators() {
           <motion.p 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
             className="text-lg md:text-xl text-slate-700 font-light leading-relaxed"
           >
@@ -92,7 +92,7 @@ export default function VisualIndicators() {
             className="xl:w-1/2 w-full order-1 xl:order-2 relative"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <div className="absolute inset-0 bg-blue-100 rounded-[2.5rem] md:rounded-[3rem] transform rotate-3 scale-105"></div>
@@ -158,7 +158,7 @@ export default function VisualIndicators() {
                     key={index}
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.3 }}
+                    viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.7, delay: index * 0.1, ease: "easeOut" }}
                     className={`min-w-[85vw] sm:min-w-0 snap-center p-6 md:p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/20 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group relative overflow-hidden`}
                   >

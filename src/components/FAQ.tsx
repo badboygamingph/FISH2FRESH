@@ -33,7 +33,7 @@ export default function FAQ() {
           <motion.h2 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
             className="text-3xl md:text-4xl font-bold text-slate-900 mb-4"
           >
@@ -42,7 +42,7 @@ export default function FAQ() {
           <motion.p 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-lg text-slate-700"
           >
@@ -58,7 +58,7 @@ export default function FAQ() {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50"
               >

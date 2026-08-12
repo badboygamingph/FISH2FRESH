@@ -42,7 +42,7 @@ const DotGrid = ({
   resistance = 750,
   returnDuration = 1.5,
   className = '',
-  style
+  style = undefined
 }) => {
   const wrapperRef = useRef(null);
   const canvasRef = useRef(null);
@@ -57,6 +57,7 @@ const DotGrid = ({
     lastX: 0,
     lastY: 0
   });
+  const isVisible = useRef(false);
 
   const baseRgb = useMemo(() => hexToRgb(baseColor), [baseColor]);
   const activeRgb = useMemo(() => hexToRgb(activeColor), [activeColor]);
@@ -115,6 +116,10 @@ const DotGrid = ({
     const proxSq = proximity * proximity;
 
     const draw = () => {
+      if (!isVisible.current) {
+        rafId = requestAnimationFrame(draw);
+        return;
+      }
       const canvas = canvasRef.current;
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -155,6 +160,11 @@ const DotGrid = ({
   }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
 
   useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible.current = entry.isIntersecting;
+    }, { rootMargin: '200px' });
+    if (wrapperRef.current) observer.observe(wrapperRef.current);
+
     buildGrid();
     let ro = null;
     if ('ResizeObserver' in window) {
@@ -164,6 +174,7 @@ const DotGrid = ({
       window.addEventListener('resize', buildGrid);
     }
     return () => {
+      observer.disconnect();
       if (ro) ro.disconnect();
       else window.removeEventListener('resize', buildGrid);
     };

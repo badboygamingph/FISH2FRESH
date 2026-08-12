@@ -1,11 +1,12 @@
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
-import { Fish, Languages, Menu, X } from 'lucide-react';
+import { Languages, Menu, X, Github, Linkedin } from 'lucide-react';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useDownload } from '../context/DownloadContext';
 import { ReactLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
+import logoImg from '../assets/images/logo.png';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { language, toggleLanguage, t } = useLanguage();
@@ -29,8 +30,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header className="fixed top-0 inset-x-0 z-50 bg-white/70 backdrop-blur-xl border-b border-slate-200/50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 text-blue-600 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-tr from-blue-600 to-cyan-400 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform duration-300">
-              <Fish size={20} strokeWidth={2.5} className="md:w-[22px] md:h-[22px]" />
+            <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <img src={logoImg} alt="FISH2FRESH Logo" className="w-full h-full object-contain" />
             </div>
             <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-900">FISH<span className="text-slate-400 font-light">2</span>FRESH</span>
           </Link>
@@ -97,42 +98,63 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-slate-950 text-slate-300 py-16 border-t border-slate-900">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
-          <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-3 text-white mb-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-lg inline-flex">
-              <div className="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center text-blue-400">
-                <Fish size={18} strokeWidth={2.5} />
+      <footer className="bg-white border-t border-slate-200 pt-16 pb-8 md:pt-24 md:pb-12">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+            {/* Brand Section */}
+            <div className="lg:col-span-2 space-y-6">
+              <Link to="/" className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg w-fit">
+                <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                  <img src={logoImg} alt="FISH2FRESH Logo" className="w-full h-full object-contain" />
+                </div>
+                <span className="text-2xl font-black tracking-tighter text-slate-900">FISH<span className="text-slate-400 font-light">2</span>FRESH</span>
+              </Link>
+              <p className="text-sm leading-relaxed text-slate-600 max-w-sm">
+                {t.footer.desc}
+              </p>
+              <div className="flex gap-4 pt-2">
+                <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-100 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
+                  <span className="sr-only">GitHub</span>
+                  <Github className="h-5 w-5" aria-hidden="true" />
+                </a>
+                <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200 text-slate-500 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
+                  <span className="sr-only">LinkedIn</span>
+                  <Linkedin className="h-5 w-5" aria-hidden="true" />
+                </a>
               </div>
-              <span className="text-xl font-black tracking-tighter text-white">FISH<span className="text-slate-500 font-light">2</span>FRESH</span>
-            </Link>
-            <p className="max-w-sm leading-relaxed text-slate-400">
-              {t.footer.desc}
+            </div>
+
+            {/* Links Section */}
+            <div>
+              <h3 className="text-sm font-bold tracking-wider text-slate-900 uppercase">{t.footer.product}</h3>
+              <ul role="list" className="mt-6 space-y-4">
+                <li><a href="/#features" className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.features}</a></li>
+                <li><a href="/#how-it-works" className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.howItWorks}</a></li>
+                <li><a href="/#species" className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.nav.species}</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-bold tracking-wider text-slate-900 uppercase">{t.footer.legal}</h3>
+              <ul role="list" className="mt-6 space-y-4">
+                <li><Link to="/privacy" className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.footer.privacy}</Link></li>
+                <li><Link to="/terms" className="text-sm text-slate-600 hover:text-blue-600 transition-colors font-medium">{t.footer.terms}</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-16 pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-sm text-slate-500 font-medium">
+              &copy; {new Date().getFullYear()} FISH2FRESH. All rights reserved.
             </p>
+            <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-full border border-slate-200 shadow-sm">
+               <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span className="text-slate-600 font-semibold tracking-wide text-xs uppercase">{t.footer.offline}</span>
+            </div>
           </div>
-          <div>
-            <h4 className="text-white font-semibold mb-6 tracking-wide text-sm uppercase">{t.footer.product}</h4>
-            <ul className="space-y-4 text-sm font-medium text-slate-300">
-              <li><a href="/#features" className="hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm">{t.nav.features}</a></li>
-              <li><a href="/#how-it-works" className="hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm">{t.nav.howItWorks}</a></li>
-              <li><a href="/#species" className="hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm">{t.nav.species}</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-white font-semibold mb-6 tracking-wide text-sm uppercase">{t.footer.legal}</h4>
-            <ul className="space-y-4 text-sm font-medium text-slate-300">
-              <li><Link to="/privacy" className="hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm">{t.footer.privacy}</Link></li>
-              <li><Link to="/terms" className="hover:text-blue-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded-sm">{t.footer.terms}</Link></li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-800/50 text-sm text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500">
-          <p>&copy; {new Date().getFullYear()} FISH2FRESH. All rights reserved.</p>
-          <p className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-            {t.footer.offline}
-          </p>
         </div>
       </footer>
     </div>

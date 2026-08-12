@@ -3,34 +3,21 @@ import { motion } from 'motion/react';
 import { Github, Linkedin, Mail, Sparkles } from 'lucide-react';
 
 import Aurora from './Aurora';
+import darielImg from '../assets/images/leiradnoznag.png';
 
 const teamMembers = [
   {
-    name: 'Sarah Johnson',
-    role: 'Lead AI Engineer',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&h=200&auto=format&fit=crop',
-    bio: 'Specializes in computer vision and on-device machine learning model optimization for edge devices.',
+    name: 'Dariel Ganzon',
+    role: 'System Developer',
+    image: darielImg,
+    bio: 'Architected and built the entire FISH2FRESH ecosystem, integrating on-device AI with a modern web interface.',
     socials: { github: '#', linkedin: '#', mail: '#' }
   },
   {
-    name: 'Michael Chen',
-    role: 'Frontend Architect',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&h=200&auto=format&fit=crop',
-    bio: 'Crafts buttery-smooth user interfaces and seamless cross-platform experiences using React.',
-    socials: { github: '#', linkedin: '#', mail: '#' }
-  },
-  {
-    name: 'Dr. Elena Rodriguez',
-    role: 'Marine Biologist',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&h=200&auto=format&fit=crop',
-    bio: 'Provides expert domain knowledge in fish species classification and freshness indicators.',
-    socials: { linkedin: '#', mail: '#' }
-  },
-  {
-    name: 'David Kim',
-    role: 'UX/UI Designer',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&h=200&auto=format&fit=crop',
-    bio: 'Designs intuitive workflows that make complex AI technology accessible and easy to use for everyone.',
+    name: 'Jan Clyde Villavelez',
+    role: 'Project Assistant',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop',
+    bio: 'Provides essential support in organizing project milestones, user experience testing, and system analysis.',
     socials: { linkedin: '#', mail: '#' }
   }
 ];
@@ -81,7 +68,7 @@ export default function Team() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex overflow-x-auto sm:justify-center pb-8 -mx-4 px-4 snap-x snap-mandatory gap-6 md:gap-12 sm:overflow-visible sm:pb-0 sm:mx-0 sm:px-0 sm:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none]">
           {teamMembers.map((member, index) => (
             <motion.div
               key={member.name}
@@ -89,41 +76,47 @@ export default function Team() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15, duration: 0.6, type: "spring", stiffness: 100 }}
-              className="group relative bg-white rounded-3xl p-6 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-300 flex flex-col h-full"
+              className="w-[85vw] sm:w-[360px] lg:w-[400px] shrink-0 snap-center group relative rounded-3xl overflow-hidden aspect-[3/4] sm:aspect-[4/5] shadow-lg hover:shadow-2xl transition-all duration-500"
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl pointer-events-none"></div>
+              {/* Full Image */}
+              <img 
+                src={member.image} 
+                alt={member.name} 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" 
+              />
               
-              <div className="relative mb-6 inline-block w-full text-center">
-                <div className="w-28 h-28 mx-auto rounded-2xl overflow-hidden shadow-md ring-4 ring-white relative z-10 group-hover:scale-105 transition-transform duration-500">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                </div>
-                {/* Decorative glow behind image */}
-                <div className="absolute inset-0 bg-blue-100 blur-2xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 scale-150 -z-10"></div>
-              </div>
+              {/* Gradient Overlay - Always partially visible at bottom, full on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/80 to-transparent opacity-95 lg:opacity-80 lg:group-hover:opacity-95 transition-opacity duration-500" />
               
-              <div className="text-center relative z-10 flex flex-col flex-grow">
-                <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-blue-600 transition-colors duration-300">{member.name}</h3>
-                <p className="text-sm font-semibold text-blue-500 mb-4">{member.role}</p>
-                <p className="text-sm text-slate-600 mb-6 leading-relaxed flex-grow">
-                  {member.bio}
-                </p>
-                
-                <div className="flex items-center justify-center gap-4 pt-4 border-t border-slate-100 mt-auto">
-                  {member.socials.github && (
-                    <a href={member.socials.github} onClick={(e) => e.preventDefault()} className="text-slate-400 hover:text-slate-900 transition-colors duration-300 hover:scale-110">
-                      <Github size={20} />
-                    </a>
-                  )}
-                  {member.socials.linkedin && (
-                    <a href={member.socials.linkedin} onClick={(e) => e.preventDefault()} className="text-slate-400 hover:text-blue-600 transition-colors duration-300 hover:scale-110">
-                      <Linkedin size={20} />
-                    </a>
-                  )}
-                  {member.socials.mail && (
-                    <a href={member.socials.mail} onClick={(e) => e.preventDefault()} className="text-slate-400 hover:text-red-500 transition-colors duration-300 hover:scale-110">
-                      <Mail size={20} />
-                    </a>
-                  )}
+              {/* Content Container */}
+              <div className="absolute inset-0 p-6 flex flex-col justify-end text-white text-left z-10 overflow-hidden">
+                <div className="transform translate-y-0 lg:translate-y-[120px] lg:group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]">
+                  <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
+                  <p className="text-blue-400 font-medium mb-4">{member.role}</p>
+                  
+                  <div className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500 lg:delay-100">
+                    <p className="text-slate-200 text-sm mb-6 leading-relaxed">
+                      {member.bio}
+                    </p>
+                    
+                    <div className="flex items-center gap-4 pt-4 border-t border-white/20">
+                      {member.socials.github && (
+                        <a href={member.socials.github} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-white transition-colors hover:scale-110">
+                          <Github size={20} />
+                        </a>
+                      )}
+                      {member.socials.linkedin && (
+                        <a href={member.socials.linkedin} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-blue-400 transition-colors hover:scale-110">
+                          <Linkedin size={20} />
+                        </a>
+                      )}
+                      {member.socials.mail && (
+                        <a href={member.socials.mail} onClick={(e) => e.preventDefault()} className="text-slate-300 hover:text-red-400 transition-colors hover:scale-110">
+                          <Mail size={20} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>

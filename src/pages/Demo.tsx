@@ -10,7 +10,7 @@ export default function Demo() {
   const { startDownload } = useDownload();
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
-  const [selectedScenario, setSelectedScenario] = useState<'fresh' | 'fairlyFresh' | 'spoiled'>('fresh');
+  const [selectedScenario, setSelectedScenario] = useState<'fresh' | 'fairlyFresh' | 'spoiled' | 'invalid'>('invalid');
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const togglePlay = () => {
@@ -46,6 +46,7 @@ export default function Demo() {
       skinFil: 'Matigas at makinang na balat',
       recommendationEn: 'Optimal for consumption and immediate cooking.',
       recommendationFil: 'Pinakamagandang kalidad at ligtas lutuin agad.',
+      targetEn: 'Auxis thazard (Pirit)'
     },
     fairlyFresh: {
       nameEn: 'Fairly Fresh (Medyo Sariwa)',
@@ -61,6 +62,7 @@ export default function Demo() {
       skinFil: 'Medyo bawas ang kinang ng balat',
       recommendationEn: 'Safe for consumption. Cook thoroughly within 12 hours.',
       recommendationFil: 'Ligtas kainin. Lutuing mabuti sa loob ng 12 oras.',
+      targetEn: 'Auxis thazard (Pirit)'
     },
     spoiled: {
       nameEn: 'Spoiled (Bilasa)',
@@ -76,6 +78,23 @@ export default function Demo() {
       skinFil: 'Malambot na balat at nawalan ng kinang',
       recommendationEn: 'Do NOT purchase or consume. Clear signs of spoilage.',
       recommendationFil: 'Huwag bilhin o kainin. May senyales na ng pagkasira.',
+      targetEn: 'Auxis thazard (Pirit)'
+    },
+    invalid: {
+      nameEn: 'Unavailable',
+      nameFil: 'Hindi Magamit',
+      badgeClass: 'bg-rose-900/40 text-rose-400 border-rose-500/50',
+      icon: AlertTriangle,
+      confidence: '99.9%',
+      eyesEn: 'No eyes detected in frame',
+      eyesFil: 'Walang matang nakita',
+      gillsEn: 'No gills detected in frame',
+      gillsFil: 'Walang hasang nakita',
+      skinEn: 'Texture does not match any fish species',
+      skinFil: 'Hindi balat ng isda',
+      recommendationEn: 'Please point camera at a supported fish species.',
+      recommendationFil: 'Itutok ang camera sa isdang nais suriin.',
+      targetEn: 'UNAVAILABLE / NOT FISH'
     },
   };
 
@@ -129,7 +148,7 @@ export default function Demo() {
             <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider self-center mr-2">
               {language === 'en' ? 'Select Scan Condition:' : 'Pumili ng Kondisyon:'}
             </span>
-            {(['fresh', 'fairlyFresh', 'spoiled'] as const).map((key) => {
+            {(['invalid', 'fresh', 'fairlyFresh', 'spoiled'] as const).map((key) => {
               const active = selectedScenario === key;
               return (
                 <button
@@ -165,6 +184,25 @@ export default function Demo() {
                 />
               </video>
 
+              {/* Unavailable Overlay */}
+              <motion.div
+                initial={false}
+                animate={{ opacity: selectedScenario === 'invalid' ? 1 : 0 }}
+                className={`absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-950/95 backdrop-blur-2xl ${selectedScenario === 'invalid' ? 'pointer-events-auto' : 'pointer-events-none'}`}
+              >
+                <div className="relative flex flex-col items-center">
+                  <div className="absolute inset-0 bg-rose-600/20 blur-3xl rounded-full"></div>
+                  <XCircle size={64} className="text-rose-500 mb-6 drop-shadow-[0_0_15px_rgba(244,63,94,0.5)]" strokeWidth={1.5} />
+                  <h2 className="text-3xl md:text-5xl font-black text-white tracking-[0.2em] uppercase mb-3 drop-shadow-lg">
+                    Unavailable
+                  </h2>
+                  <div className="flex items-center gap-2 text-rose-400 font-mono text-xs md:text-sm tracking-widest bg-rose-950/50 px-4 py-1.5 rounded-full border border-rose-500/20">
+                    <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                    NO FISH DETECTED
+                  </div>
+                </div>
+              </motion.div>
+
               {/* Real-time AI Classification HUD Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40 pointer-events-none p-6 flex flex-col justify-between">
                 {/* Top Status */}
@@ -179,9 +217,9 @@ export default function Demo() {
                 </div>
 
                 {/* Center Bounding Frame */}
-                <div className="self-center w-2/3 h-2/3 border-2 border-dashed border-blue-400/70 rounded-2xl relative flex items-center justify-center">
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600/90 backdrop-blur-md text-white text-[10px] font-mono px-3 py-0.5 rounded-full uppercase tracking-wider">
-                    TARGET: Auxis thazard (Pirit)
+                <div className={`self-center w-2/3 h-2/3 border-2 border-dashed ${selectedScenario === 'invalid' ? 'border-rose-400/70' : 'border-blue-400/70'} rounded-2xl relative flex items-center justify-center transition-colors duration-300`}>
+                  <div className={`absolute -top-3 left-1/2 -translate-x-1/2 ${selectedScenario === 'invalid' ? 'bg-rose-600/90' : 'bg-blue-600/90'} backdrop-blur-md text-white text-[10px] font-mono px-3 py-0.5 rounded-full uppercase tracking-wider whitespace-nowrap`}>
+                    TARGET: {currentInfo.targetEn}
                   </div>
                 </div>
 

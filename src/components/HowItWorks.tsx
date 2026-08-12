@@ -88,7 +88,7 @@ export default function HowItWorks() {
                   key={index}
                   initial={{ opacity: 0, y: 100, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: false, amount: 0.4, margin: "0px 0px -50px 0px" }}
+                  viewport={{ once: false, amount: 0.4, margin: "0px 0px -10% 0px" }}
                   transition={{ duration: 0.8, type: 'spring', bounce: 0.3 }}
                   className={`relative z-10 flex flex-col md:flex-row items-center gap-6 md:gap-10 lg:gap-20 ${isEven ? '' : 'md:flex-row-reverse'}`}
                 >
@@ -116,7 +116,7 @@ export default function HowItWorks() {
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.8 }}
+            viewport={{ once: true, amount: 0.8 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center mb-12 md:mb-16"
           >
@@ -135,7 +135,7 @@ export default function HowItWorks() {
              <motion.div 
                 initial={{ opacity: 0, y: 100, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.2, margin: "0px 0px -50px 0px" }}
+                viewport={{ once: true, amount: 0.2, margin: "0px 0px -50px 0px" }}
                 transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
                 whileHover={{ scale: 1.03, y: -12 }}
                 className="min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-center group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(16,185,129,0.15)] hover:border-emerald-200 transition-all duration-300"
@@ -154,7 +154,7 @@ export default function HowItWorks() {
              <motion.div 
                 initial={{ opacity: 0, y: 100, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.2, margin: "0px 0px -50px 0px" }}
+                viewport={{ once: true, amount: 0.2, margin: "0px 0px -50px 0px" }}
                 transition={{ duration: 0.8, delay: 0.1, type: "spring", bounce: 0.3 }}
                 whileHover={{ scale: 1.03, y: -12 }}
                 className="min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-center group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(245,158,11,0.15)] hover:border-amber-200 transition-all duration-300"
@@ -173,7 +173,7 @@ export default function HowItWorks() {
              <motion.div 
                 initial={{ opacity: 0, y: 100, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.2, margin: "0px 0px -50px 0px" }}
+                viewport={{ once: true, amount: 0.2, margin: "0px 0px -50px 0px" }}
                 transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.3 }}
                 whileHover={{ scale: 1.03, y: -12 }}
                 className="min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-center group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(244,63,94,0.15)] hover:border-rose-200 transition-all duration-300"

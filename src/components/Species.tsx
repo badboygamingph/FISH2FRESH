@@ -111,7 +111,7 @@ export default function Species() {
           <motion.h2 
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, type: "spring" }}
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
           >
@@ -120,7 +120,7 @@ export default function Species() {
           <motion.p 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto md:mx-0"
           >
@@ -145,46 +145,46 @@ export default function Species() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
-                  className={`flex flex-col lg:flex-row bg-white/5 backdrop-blur-3xl rounded-[1.5rem] lg:rounded-[2.5rem] border border-white/10 overflow-hidden group hover:bg-white/10 hover:border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 shadow-2xl relative z-10 w-full max-w-6xl mx-auto`}
+                  className={`flex flex-col lg:flex-row bg-slate-900/40 backdrop-blur-2xl rounded-2xl lg:rounded-3xl border border-white/10 overflow-hidden group hover:bg-slate-900/60 hover:border-white/20 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 shadow-2xl relative z-10 w-full max-w-5xl mx-auto`}
                 >
-                  {/* Image Side - Uncropped, fully visible */}
-                  <div className="w-full lg:w-1/2 relative aspect-video lg:aspect-auto lg:min-h-[550px] overflow-hidden bg-black/40 shrink-0 flex items-center justify-center p-4 sm:p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/5">
-                    <div className={`absolute inset-0 z-10 opacity-30 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-10 ${species.accentColor}`}></div>
+                  {/* Image Side - Full Bleed */}
+                  <div className="w-full lg:w-[45%] relative aspect-[4/3] lg:aspect-auto lg:min-h-[460px] overflow-hidden shrink-0 bg-slate-800">
+                    <div className={`absolute inset-0 z-10 opacity-20 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-10 ${species.accentColor}`}></div>
                     <ImageWithSkeleton 
                       src={species.image} 
                       alt={species.name} 
-                      className="relative z-20 w-full h-full object-contain rounded-xl sm:rounded-2xl drop-shadow-2xl transition-transform duration-700 group-hover:scale-105 ring-1 ring-white/5"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
                 
                 {/* Content Side */}
-                <div className="w-full lg:w-1/2 p-6 sm:p-10 lg:p-14 flex flex-col justify-center">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                    <h3 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">{species.name}</h3>
-                    <div className={`self-start sm:self-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full ${species.badgeBg} ${species.badgeText} text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap border border-white/10 shadow-sm`}>
-                      <Tag size={14} />
+                <div className="w-full lg:w-[55%] p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">{species.name}</h3>
+                    <div className={`self-start sm:self-auto flex items-center gap-1.5 px-2.5 py-1 rounded-full ${species.badgeBg} ${species.badgeText} text-[11px] sm:text-xs font-semibold tracking-wide border border-white/10 shadow-sm`}>
+                      <Tag size={12} />
                       {species.localName}
                     </div>
                   </div>
                   
-                  <p className="text-slate-300 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 font-light">
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-light">
                     {species.description}
                   </p>
                   
-                  <div className="pt-6 sm:pt-8 border-t border-slate-700/50 mt-auto">
-                    <h4 className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 sm:mb-6">{t.species.keyId}</h4>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 mb-8 sm:mb-10">
+                  <div className="pt-5 sm:pt-6 border-t border-slate-700/50 mt-auto">
+                    <h4 className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3 sm:mb-4">{t.species.keyId}</h4>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 mb-6 sm:mb-8">
                       {species.traits.map((trait, i) => (
-                        <li key={i} className="flex items-start gap-3">
-                          <CheckCircle2 size={18} className={`shrink-0 mt-0.5 ${species.iconColor}`} />
-                          <span className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">{trait}</span>
+                        <li key={i} className="flex items-start gap-2.5">
+                          <CheckCircle2 size={16} className={`shrink-0 mt-0.5 ${species.iconColor}`} />
+                          <span className="text-slate-300 text-xs sm:text-sm leading-relaxed font-medium">{trait}</span>
                         </li>
                       ))}
                     </ul>
                     <Link
                       to={`/species/${species.id}`}
                       onClick={() => window.scrollTo(0, 0)}
-                      className={`inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white ${species.accentColor} hover:brightness-110 shadow-lg rounded-full px-6 py-3.5 w-full sm:w-fit justify-center transition-all duration-300 hover:pr-4 group/btn`}
+                      className={`inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-white ${species.accentColor} hover:brightness-110 shadow-lg rounded-xl px-5 py-2.5 w-full sm:w-fit justify-center transition-all duration-300 hover:pr-3 group/btn`}
                     >
                       Read Full Details
                       <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
