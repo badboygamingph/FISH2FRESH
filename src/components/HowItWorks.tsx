@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Camera, ScanSearch, CheckSquare, CheckCircle2, AlertTriangle, XCircle, MoveHorizontal, Brain } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,6 +7,19 @@ import DotGrid from './DotGrid';
 export default function HowItWorks() {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)');
+    setIsDesktop(media.matches);
+    
+    const listener = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+    };
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -45,9 +58,9 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="relative bg-white overflow-hidden">
+    <section id="how-it-works" className="relative bg-white">
       {/* Interactive Dot Grid Background */}
-      <div className="absolute inset-0 z-0 opacity-60 pointer-events-none">
+      <div className="absolute inset-0 z-0 opacity-60 pointer-events-none overflow-hidden">
         <DotGrid
           dotSize={6}
           gap={24}
@@ -59,9 +72,9 @@ export default function HowItWorks() {
       </div>
 
       {/* Scrollytelling Section */}
-      <div ref={containerRef} className="h-[400vh] relative pt-20 md:pt-32">
-        {/* Sticky Container */}
-        <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden">
+      <div ref={containerRef} className={`${isDesktop ? 'h-[400vh]' : 'h-auto'} relative pt-20 md:pt-32`}>
+        {/* Sticky Container (Desktop) / Normal Container (Mobile) */}
+        <div className={`${isDesktop ? 'sticky top-0 h-[100dvh]' : 'relative'} w-full flex flex-col justify-center overflow-hidden`}>
           
           {/* Header (Sticky inside the container) */}
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 relative z-10 mb-10 md:mb-16">
@@ -75,18 +88,18 @@ export default function HowItWorks() {
             </div>
           </div>
 
-          {/* Horizontal Sliding Track */}
-          <div className="relative z-10 w-full overflow-hidden py-4">
+          {/* Horizontal Sliding Track (Desktop) / Vertical List (Mobile) */}
+          <div className={`relative z-10 w-full overflow-hidden py-4 ${isDesktop ? '' : 'pb-16'}`}>
             <motion.div 
-              style={{ x: trackX }}
-              className="flex gap-6 md:gap-12 px-6 md:px-[10vw] w-[max-content] items-center"
+              style={isDesktop ? { x: trackX } : {}}
+              className={`flex ${isDesktop ? 'gap-6 md:gap-12 px-6 md:px-[10vw] w-[max-content] items-center' : 'flex-col gap-8 px-6 w-full'}`}
             >
               {steps.map((step, index) => {
                 const Icon = step.icon;
                 return (
                   <div 
                     key={index}
-                    className="w-[85vw] sm:w-[450px] md:w-[600px] shrink-0"
+                    className={isDesktop ? "w-[85vw] sm:w-[450px] md:w-[600px] shrink-0" : "w-full"}
                   >
                     <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col md:flex-row gap-8 md:gap-12 items-center hover:border-blue-200 hover:shadow-blue-900/5 transition-all duration-500 group h-full">
                       
@@ -150,14 +163,14 @@ export default function HowItWorks() {
           </div>
         </motion.div>
         
-        <div className="flex overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory lg:grid lg:grid-cols-3 gap-6 md:gap-8 lg:overflow-visible lg:pb-0 lg:mx-0 lg:px-0 lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none]">
+        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 md:gap-8">
           <motion.div 
             initial={{ opacity: 0, y: 100, scale: 0.9 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.2, margin: "0px 0px -50px 0px" }}
             transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
             whileHover={{ scale: 1.03, y: -12 }}
-            className="min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-center group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(16,185,129,0.15)] hover:border-emerald-200 transition-all duration-300 flex flex-col h-full"
+            className="w-full lg:min-w-0 group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(16,185,129,0.15)] hover:border-emerald-200 transition-all duration-300 flex flex-col h-full"
           >
             <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm">
               <CheckCircle2 size={32} strokeWidth={1.5} />
@@ -177,7 +190,7 @@ export default function HowItWorks() {
             viewport={{ once: true, amount: 0.2, margin: "0px 0px -50px 0px" }}
             transition={{ duration: 0.8, delay: 0.1, type: "spring", bounce: 0.3 }}
             whileHover={{ scale: 1.03, y: -12 }}
-            className="min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-center group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(245,158,11,0.15)] hover:border-amber-200 transition-all duration-300 flex flex-col h-full"
+            className="w-full lg:min-w-0 group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(245,158,11,0.15)] hover:border-amber-200 transition-all duration-300 flex flex-col h-full"
           >
             <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm">
               <AlertTriangle size={32} strokeWidth={1.5} />
@@ -197,7 +210,7 @@ export default function HowItWorks() {
             viewport={{ once: true, amount: 0.2, margin: "0px 0px -50px 0px" }}
             transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.3 }}
             whileHover={{ scale: 1.03, y: -12 }}
-            className="min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-center group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(244,63,94,0.15)] hover:border-rose-200 transition-all duration-300 flex flex-col h-full"
+            className="w-full lg:min-w-0 group bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-slate-200/20 border border-slate-100 hover:shadow-[0_20px_40px_rgba(244,63,94,0.15)] hover:border-rose-200 transition-all duration-300 flex flex-col h-full"
           >
             <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mb-8 shadow-sm">
               <XCircle size={32} strokeWidth={1.5} />

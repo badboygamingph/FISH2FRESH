@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Tag, CheckCircle2, ArrowRight } from 'lucide-react';
@@ -12,6 +12,21 @@ import mackerelImg from '../assets/images/mackerel_tuna_1786286531308.webp';
 export default function Species() {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLElement>(null);
+  
+  const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
+
+  useEffect(() => {
+    // Check initial
+    const media = window.matchMedia('(min-width: 768px)');
+    setIsDesktop(media.matches);
+    
+    // Listen for changes
+    const listener = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+    };
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -74,9 +89,9 @@ export default function Species() {
   const trackX = useTransform(scrollYProgress, (v) => `calc(${-v * 100}% + ${v * 100}vw)`);
 
   return (
-    <section ref={containerRef} id="species" className="relative h-[400vh] bg-slate-900 text-white">
+    <section ref={containerRef} id="species" className={`relative ${isDesktop ? 'h-[400vh]' : 'h-auto py-20'} bg-slate-900 text-white`}>
       {/* Sticky Inner Container */}
-      <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden">
+      <div className={`${isDesktop ? 'sticky top-0 h-[100dvh]' : 'relative min-h-screen pb-10'} w-full flex flex-col justify-center overflow-hidden`}>
         
         {/* Background Dot Field */}
         <div className="absolute inset-0 z-0 opacity-70 pointer-events-none">
@@ -112,22 +127,22 @@ export default function Species() {
           >
             {t.species.desc}
           </motion.p>
-          <div className="flex items-center justify-center md:justify-start gap-4 mt-6">
+          <div className={`flex items-center justify-center md:justify-start gap-4 mt-6 ${isDesktop ? '' : 'hidden'}`}>
             <span className="text-xs text-cyan-400 uppercase tracking-widest font-bold">Scroll down to view species</span>
             <div className="h-[1px] w-12 bg-cyan-500/50"></div>
           </div>
         </div>
 
-        {/* Horizontal Sliding Track */}
-        <div className="relative z-10 w-full overflow-hidden">
+        {/* Horizontal Sliding Track or Vertical List on Mobile */}
+        <div className="relative z-10 w-full overflow-hidden pb-10 md:pb-0">
           <motion.div 
-            style={{ x: trackX }}
-            className="flex gap-6 md:gap-12 px-6 md:px-[5vw] w-[max-content]"
+            style={isDesktop ? { x: trackX } : {}}
+            className={`flex ${isDesktop ? 'gap-6 md:gap-12 px-6 md:px-[5vw] w-[max-content]' : 'flex-col gap-12 px-6 w-full'}`}
           >
             {speciesList.map((species, index) => (
               <div 
                 key={index}
-                className="w-[85vw] sm:w-[500px] md:w-[900px] shrink-0"
+                className={isDesktop ? "w-[85vw] sm:w-[500px] md:w-[900px] shrink-0" : "w-full"}
               >
                 <div className="flex flex-col md:flex-row bg-slate-900/60 backdrop-blur-2xl rounded-2xl md:rounded-3xl border border-white/10 overflow-hidden group hover:bg-slate-900/80 hover:border-white/20 transition-all duration-500 shadow-2xl h-full">
                   {/* Image Side */}
@@ -185,12 +200,14 @@ export default function Species() {
         </div>
 
         {/* Bottom Progress Bar */}
-        <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 w-48 h-[2px] bg-white/10 z-50 overflow-hidden rounded-full">
-          <motion.div 
-            className="h-full bg-cyan-500 origin-left"
-            style={{ scaleX: scrollYProgress }}
-          />
-        </div>
+        {isDesktop && (
+          <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 w-48 h-[2px] bg-white/10 z-50 overflow-hidden rounded-full">
+            <motion.div 
+              className="h-full bg-cyan-500 origin-left"
+              style={{ scaleX: scrollYProgress }}
+            />
+          </div>
+        )}
 
       </div>
     </section>

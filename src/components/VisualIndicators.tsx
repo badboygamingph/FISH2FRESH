@@ -150,7 +150,7 @@ export default function VisualIndicators() {
           </motion.div>
 
           <div className="xl:w-1/2 w-full order-2 xl:order-1">
-            <div className="flex overflow-x-auto pb-8 -mx-4 px-4 snap-x snap-mandatory sm:grid sm:grid-cols-2 gap-6 md:gap-8 sm:overflow-visible sm:pb-0 sm:mx-0 sm:px-0 sm:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none]">
+            <div className="flex flex-col sm:grid sm:grid-cols-2 gap-6 md:gap-8">
               {indicators.map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -160,7 +160,7 @@ export default function VisualIndicators() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.7, delay: index * 0.1, ease: "easeOut" }}
-                    className={`min-w-[85vw] sm:min-w-0 snap-center p-6 md:p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/20 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group relative overflow-hidden`}
+                    className={`w-full sm:min-w-0 p-6 md:p-8 rounded-[2rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/20 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group relative overflow-hidden`}
                   >
                     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-current to-transparent opacity-[0.03] rounded-bl-[2rem] transition-transform duration-700 group-hover:scale-110 ${item.color}`}></div>
                     <div className="relative z-10 flex flex-col items-start gap-6">
