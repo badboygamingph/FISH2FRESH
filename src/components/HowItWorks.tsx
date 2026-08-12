@@ -13,25 +13,9 @@ export default function HowItWorks() {
     offset: ["start start", "end end"]
   });
 
-  // Hardcoded transforms for exactly 3 steps to ensure perfect timing
-  // Step 1: Active 0.0 - 0.3 (Fades out 0.3 - 0.4)
-  const op1 = useTransform(scrollYProgress, [0, 0.3, 0.4, 1], [1, 1, 0, 0]);
-  const y1  = useTransform(scrollYProgress, [0, 0.3, 0.4, 1], [0, 0, -50, -50]);
-  const scale1 = useTransform(scrollYProgress, [0, 0.3, 0.4, 1], [1, 1, 0.8, 0.8]);
-
-  // Step 2: Fades in 0.3 - 0.4, Active 0.4 - 0.6, Fades out 0.6 - 0.7
-  const op2 = useTransform(scrollYProgress, [0, 0.3, 0.4, 0.6, 0.7, 1], [0, 0, 1, 1, 0, 0]);
-  const y2  = useTransform(scrollYProgress, [0, 0.3, 0.4, 0.6, 0.7, 1], [50, 50, 0, 0, -50, -50]);
-  const scale2 = useTransform(scrollYProgress, [0, 0.3, 0.4, 0.6, 0.7, 1], [0.8, 0.8, 1, 1, 0.8, 0.8]);
-
-  // Step 3: Fades in 0.6 - 0.7, Active 0.7 - 1.0
-  const op3 = useTransform(scrollYProgress, [0, 0.6, 0.7, 1], [0, 0, 1, 1]);
-  const y3  = useTransform(scrollYProgress, [0, 0.6, 0.7, 1], [50, 50, 0, 0]);
-  const scale3 = useTransform(scrollYProgress, [0, 0.6, 0.7, 1], [0.8, 0.8, 1, 1]);
-
-  const opacities = [op1, op2, op3];
-  const ys = [y1, y2, y3];
-  const scales = [scale1, scale2, scale3];
+  // Mathematically perfect horizontal translation
+  // Moves the track precisely from its natural left position to aligning its right edge with the screen's right edge
+  const trackX = useTransform(scrollYProgress, (v) => `calc(${-v * 100}% + ${v * 100}vw)`);
 
   const steps = [
     {
@@ -74,89 +58,72 @@ export default function HowItWorks() {
         />
       </div>
 
-      {/* Header Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-20 md:pt-32">
-        <div className="text-center max-w-3xl mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7, type: "spring" }}
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-slate-900 mb-6"
-          >
-            {t.howItWorks.title}
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ delay: 0.1, duration: 0.7 }}
-            className="text-lg md:text-xl text-slate-600 font-light px-2"
-          >
-            {t.howItWorks.desc}
-          </motion.p>
-        </div>
-      </div>
-
       {/* Scrollytelling Section */}
-      <div ref={containerRef} className="h-[300vh] relative mt-16 md:mt-24">
+      <div ref={containerRef} className="h-[400vh] relative pt-20 md:pt-32">
         {/* Sticky Container */}
-        <div className="sticky top-0 h-[100dvh] w-full flex items-center justify-center overflow-hidden">
-          <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-center gap-10 lg:gap-20 px-6 sm:px-8">
-            
-            {/* Left Side: Dynamic Visualizer */}
-            <div className="flex-1 w-full relative h-[35vh] md:h-[60vh] flex items-center justify-center lg:justify-end">
-              <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
-                {steps.map((step, index) => {
-                  const Icon = step.icon;
-                  return (
-                    <motion.div
-                      key={index}
-                      style={{ opacity: opacities[index], scale: scales[index] }}
-                      className={`absolute inset-0 rounded-full md:rounded-[3rem] shadow-2xl flex items-center justify-center border-2 bg-white ${step.border}`}
-                    >
-                      {/* Decorative inner rings */}
-                      <div className={`absolute inset-3 md:inset-4 rounded-full md:rounded-[2rem] border-2 border-dashed opacity-50 ${step.border}`}></div>
-                      <div className={`absolute inset-6 md:inset-8 rounded-full opacity-20 ${step.bg}`}></div>
-                      
-                      <Icon className={`w-16 h-16 sm:w-20 sm:h-20 md:w-32 md:h-32 relative z-10 ${step.color}`} strokeWidth={1} />
-                      
-                      {/* Step Number Background */}
-                      <div className="absolute top-4 left-4 md:top-6 md:left-6 text-[4rem] md:text-[8rem] font-black italic text-slate-900/5 leading-none select-none pointer-events-none">
-                        0{index + 1}
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Right Side: Scrolling Text */}
-            <div className="flex-1 w-full relative h-[35vh] md:h-[60vh] flex items-center justify-center lg:justify-start">
-              <div className="relative w-full h-full max-w-md">
-                {steps.map((step, index) => (
-                  <motion.div
-                    key={index}
-                    style={{ opacity: opacities[index], y: ys[index] }}
-                    className="absolute inset-0 flex flex-col justify-center text-center md:text-left"
-                  >
-                    <div className={`inline-flex items-center justify-center md:justify-start gap-3 mb-4 md:mb-6`}>
-                      <span className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold text-sm md:text-lg border-2 ${step.color} ${step.bg} ${step.border}`}>
-                        {index + 1}
-                      </span>
-                      <span className="text-xs md:text-sm font-bold tracking-widest uppercase text-slate-400">Step {index + 1}</span>
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-3 md:mb-6">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm sm:text-base md:text-xl text-slate-600 font-light leading-relaxed">
-                      {step.description}
-                    </p>
-                  </motion.div>
-                ))}
-              </div>
+        <div className="sticky top-0 h-[100dvh] w-full flex flex-col justify-center overflow-hidden">
+          
+          {/* Header (Sticky inside the container) */}
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 relative z-10 mb-10 md:mb-16">
+            <div className="text-center md:text-left max-w-3xl">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-slate-900 mb-4 md:mb-6">
+                {t.howItWorks.title}
+              </h2>
+              <p className="text-lg md:text-xl text-slate-600 font-light">
+                {t.howItWorks.desc}
+              </p>
             </div>
           </div>
+
+          {/* Horizontal Sliding Track */}
+          <div className="relative z-10 w-full overflow-hidden py-4">
+            <motion.div 
+              style={{ x: trackX }}
+              className="flex gap-6 md:gap-12 px-6 md:px-[10vw] w-[max-content] items-center"
+            >
+              {steps.map((step, index) => {
+                const Icon = step.icon;
+                return (
+                  <div 
+                    key={index}
+                    className="w-[85vw] sm:w-[450px] md:w-[600px] shrink-0"
+                  >
+                    <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col md:flex-row gap-8 md:gap-12 items-center hover:border-blue-200 hover:shadow-blue-900/5 transition-all duration-500 group h-full">
+                      
+                      {/* Icon Section */}
+                      <div className="relative w-40 h-40 md:w-56 md:h-56 shrink-0 flex items-center justify-center">
+                        <div className={`absolute inset-0 rounded-full border-2 border-dashed opacity-50 ${step.border} group-hover:rotate-12 transition-transform duration-700 ease-out`}></div>
+                        <div className={`absolute inset-4 rounded-full opacity-20 ${step.bg} group-hover:scale-110 transition-transform duration-500`}></div>
+                        <Icon className={`w-16 h-16 md:w-24 md:h-24 relative z-10 ${step.color}`} strokeWidth={1} />
+                        
+                        <div className="absolute -top-4 -right-4 md:-top-6 md:-right-6 text-[4rem] md:text-[6rem] font-black italic text-slate-900/5 leading-none select-none pointer-events-none">
+                          0{index + 1}
+                        </div>
+                      </div>
+
+                      {/* Text Section */}
+                      <div className="flex-1 text-center md:text-left flex flex-col justify-center">
+                        <div className={`inline-flex items-center justify-center md:justify-start gap-3 mb-4`}>
+                          <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border-2 ${step.color} ${step.bg} ${step.border}`}>
+                            {index + 1}
+                          </span>
+                          <span className="text-xs font-bold tracking-widest uppercase text-slate-400">Step {index + 1}</span>
+                        </div>
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 mb-4">
+                          {step.title}
+                        </h3>
+                        <p className="text-slate-600 font-light leading-relaxed text-sm sm:text-base md:text-lg">
+                          {step.description}
+                        </p>
+                      </div>
+                      
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+          </div>
+          
         </div>
       </div>
 
