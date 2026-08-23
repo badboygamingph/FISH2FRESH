@@ -34,7 +34,7 @@ export default function Team() {
 
   return (
     <section id="team" className="text-white relative py-24 md:py-32" style={{ backgroundColor: '#100e0b' }}>
-      
+
       {/* Obsidian Background Layers */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         {/* Layer 1 - normal */}
@@ -54,9 +54,9 @@ export default function Team() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Heading matching ROS Legacy */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -65,7 +65,7 @@ export default function Team() {
         >
           <div className="max-w-2xl">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter leading-[1]">
-              Meet the squad.<br/>
+              Meet the squad.<br />
               <em className="text-slate-400 font-serif italic font-normal tracking-normal capitalize">Know your developers.</em>
             </h2>
           </div>
@@ -77,7 +77,7 @@ export default function Team() {
         {/* Grid matching ROS Legacy */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {teamMembers.map((member, index) => (
-            <motion.article 
+            <motion.article
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
@@ -87,22 +87,22 @@ export default function Team() {
               tabIndex={0}
             >
               {/* Image with zoom effect */}
-              <img 
-                src={member.image} 
+              <img
+                src={member.image}
                 alt={member.name}
                 className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-105"
               />
-              
+
               {/* Overlay Gradient (Bottom to Top) */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
+
               {/* Tactical Border Elements */}
               <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/20 group-hover:border-[#D4AF37] transition-colors duration-500 z-20 m-4"></div>
               <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/20 group-hover:border-[#D4AF37] transition-colors duration-500 z-20 m-4"></div>
-              
+
               {/* Scanline Effect */}
               <div className="absolute inset-0 pointer-events-none z-10 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-20"></div>
-              
+
               {/* Large Background Number */}
               <div className="absolute top-6 right-6 text-5xl md:text-6xl font-black italic text-white/10 group-hover:text-white/20 transition-colors duration-500 z-20 mix-blend-overlay">
                 0{index + 1}
@@ -110,21 +110,21 @@ export default function Team() {
 
               {/* Content */}
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 z-30 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                
+
                 <span className="text-[#D4AF37] font-bold uppercase tracking-widest text-[10px] md:text-xs mb-3 flex items-center gap-2">
                   <span className="w-4 h-[1px] bg-[#D4AF37]"></span>
                   {member.role}
                 </span>
-                
+
                 <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white mb-2 leading-none">
                   {member.name}
                 </h3>
-                
+
                 <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 opacity-0 group-hover:max-h-48 group-hover:opacity-100">
                   <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 mt-2">
                     {member.bio}
                   </p>
-                  
+
                   {/* Tactical View Link / Socials */}
                   <div className="flex items-center justify-end border-t border-white/10 pt-4">
                     <div className="flex items-center gap-3">
@@ -141,7 +141,7 @@ export default function Team() {
                     </div>
                   </div>
                 </div>
-                
+
               </div>
             </motion.article>
           ))}

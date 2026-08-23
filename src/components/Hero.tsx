@@ -5,6 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useDownload } from '../context/DownloadContext';
 import { Link } from 'react-router-dom';
 import { AppStoreButton, GalaxyStoreButton, GooglePlayButton } from './base/buttons/app-store-buttons';
+import BlurText from './BlurText';
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -96,32 +97,35 @@ export default function Hero() {
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          
+
           {/* Text Content */}
           <div className="max-w-2xl text-center lg:text-left mx-auto lg:mx-0 z-20 relative">
             {/* Readability Glow Backdrop */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-white/60 blur-[100px] rounded-[100%] pointer-events-none -z-10 mix-blend-normal"></div>
-            
+
             <motion.div
               style={{ y: textY, opacity: textOpacity }}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tighter text-slate-900 leading-[1.1] md:leading-[1.05] mb-6 md:mb-8">
-                {t.hero.title1} <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">{t.hero.title2}</span> {t.hero.title3}
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tighter text-slate-900 leading-[1.1] md:leading-[1.05] mb-6 md:mb-8 flex flex-wrap justify-center lg:justify-start gap-x-[0.25em] gap-y-2">
+                <BlurText text={t.hero.title1} delay={100} initialDelay={0.2} as="span" className="text-slate-900" />
+                <BlurText text={t.hero.title2} delay={100} initialDelay={0.2 + t.hero.title1.split(' ').length * 0.1} as="span" className="text-white" />
+                <BlurText text={t.hero.title3} delay={100} initialDelay={0.2 + (t.hero.title1.split(' ').length + t.hero.title2.split(' ').length) * 0.1} as="span" className="text-slate-900" />
               </h1>
-              <p className="text-lg md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed font-light px-2 sm:px-0">
-                {t.hero.desc1} <span className="font-medium text-slate-900">{t.hero.desc2}</span>
-              </p>
-              
+              <div className="text-lg md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed font-light px-2 sm:px-0 flex flex-wrap justify-center lg:justify-start gap-x-[0.25em] gap-y-1">
+                <BlurText text={t.hero.desc1} delay={30} initialDelay={0.8} as="span" className="text-slate-600" />
+                <BlurText text={t.hero.desc2} delay={30} initialDelay={0.8 + t.hero.desc1.split(' ').length * 0.03} as="span" className="font-medium text-slate-900" />
+              </div>
+
               <div className="flex flex-col xl:flex-row gap-4 sm:gap-5 justify-center lg:justify-start items-center xl:items-stretch">
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
                   <GooglePlayButton />
                   <AppStoreButton />
                   <GalaxyStoreButton />
                 </div>
-                <Link 
+                <Link
                   to="/demo"
                   className="flex items-center justify-center gap-2 bg-slate-900 text-white border border-transparent px-6 md:px-8 py-3.5 md:py-4 rounded-full font-semibold hover:bg-slate-800 transition-all duration-300 active:scale-95 text-sm md:text-base w-full sm:w-auto whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf8f2]"
                   aria-label={t.hero.demo}
@@ -133,7 +137,7 @@ export default function Hero() {
           </div>
 
           {/* Visual Mockup */}
-          <motion.div 
+          <motion.div
             style={{ y: phoneY }}
             initial={{ opacity: 0, scale: 0.95, y: 40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -142,28 +146,28 @@ export default function Hero() {
           >
             {/* Abstract Background Shape */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] opacity-60 z-0 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(96,165,250,0.2) 0%, transparent 70%)' }}></div>
-            
+
             {/* Phone CSS Mockup with inner float */}
-            <motion.div 
+            <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               className="relative z-10 w-[280px] h-[580px] bg-slate-900 rounded-[3rem] p-3 shadow-[0_20px_50px_rgba(37,99,235,0.2)] border border-slate-700/50"
             >
               {/* Notch */}
               <div className="absolute top-3 inset-x-0 h-6 bg-slate-900 rounded-b-2xl w-32 mx-auto z-20"></div>
-              
+
               {/* Screen */}
               <div className="w-full h-full bg-slate-50 rounded-[2.25rem] overflow-hidden flex flex-col relative">
                 {/* Camera Viewport Placeholder */}
                 <div className="h-3/5 bg-slate-200 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-                  
+
                   {/* Scanning Box */}
                   <div className="absolute inset-8 border-2 border-dashed border-blue-500 rounded-xl flex items-center justify-center">
-                     <div className="w-16 h-1 bg-blue-500 rounded-full absolute top-1/2 -translate-y-1/2 animate-pulse shadow-[0_0_15px_rgba(59,130,246,0.8)]"></div>
+                    <div className="w-16 h-1 bg-blue-500 rounded-full absolute top-1/2 -translate-y-1/2 animate-pulse shadow-[0_0_15px_rgba(59,130,246,0.8)]"></div>
                   </div>
                 </div>
-                
+
                 {/* App UI Below Camera */}
                 <div className="flex-1 p-6 flex flex-col justify-end pb-8 bg-white relative rounded-t-3xl -mt-6">
                   <div className="min-h-[140px] flex flex-col justify-end">
@@ -180,7 +184,7 @@ export default function Hero() {
                           <p className="text-sm font-medium text-slate-500 uppercase tracking-wide mb-1">{t.hero.target}</p>
                           <p className="text-xl font-bold text-slate-900">{scenario.target}</p>
                         </div>
-                        
+
                         {/* Result Badge */}
                         <div className={`${scenario.badgeBg} border ${scenario.badgeBorder} ${scenario.badgeText} rounded-2xl p-4 flex items-center justify-center gap-3 shadow-sm`}>
                           <StatusIcon className={scenario.badgeIconText} size={28} />
@@ -196,7 +200,7 @@ export default function Hero() {
               </div>
             </motion.div>
           </motion.div>
-          
+
         </div>
       </div>
     </section>

@@ -12,12 +12,12 @@ import mackerelImg from '../assets/images/mackerel_tuna_1786286531308.webp';
 const SpeciesCard: React.FC<{ species: any, index: number, total: number }> = ({ species, index, total }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   });
-  
+
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
@@ -27,27 +27,27 @@ const SpeciesCard: React.FC<{ species: any, index: number, total: number }> = ({
   // Card remains at full scale until the last 30% of the container scroll (when next card approaches)
   const scale = useTransform(smoothProgress, [0, 0.7, 1], [1, 1, 0.92]);
   const opacity = useTransform(smoothProgress, [0, 0.7, 1], [1, 1, 0.4]);
-  
+
   // Dynamic offset to make cards look physically stacked with clean spacing
   const stickyTop = `calc(5rem + ${index * 1.5}rem)`;
 
   return (
     // Increased container height to 150vh for a slower, more deliberate scroll pacing
     <div ref={containerRef} className="h-[150vh] w-full relative" style={{ zIndex: index }}>
-      <div 
-        className="sticky w-full flex justify-center items-start px-4 sm:px-6 md:px-8" 
+      <div
+        className="sticky w-full flex justify-center items-start px-4 sm:px-6 md:px-8"
         style={{ top: stickyTop }}
       >
-        <motion.div 
+        <motion.div
           style={{ scale, opacity }}
           className="w-full max-w-6xl flex flex-col md:flex-row bg-slate-900 rounded-[2rem] md:rounded-[3rem] border border-white/10 overflow-hidden group shadow-2xl hover:border-white/20 transition-colors duration-500 origin-top max-h-[85vh] md:max-h-[80vh] will-change-transform"
         >
           {/* Image Side - Adjusted for better mobile fit */}
           <div className="w-full md:w-[45%] relative h-[200px] sm:h-[250px] md:h-auto md:min-h-[500px] overflow-hidden shrink-0 bg-slate-800">
             <div className={`absolute inset-0 z-10 opacity-30 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-50 ${species.accentColor}`}></div>
-            <img 
-              src={species.image} 
-              alt={species.name} 
+            <img
+              src={species.image}
+              alt={species.name}
               loading="lazy"
               className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)]"
             />
@@ -55,7 +55,7 @@ const SpeciesCard: React.FC<{ species: any, index: number, total: number }> = ({
               0{index + 1}
             </div>
           </div>
-        
+
           {/* Content Side - Scrollable if content is too long on small devices */}
           <div className="w-full md:w-[55%] p-5 sm:p-8 md:p-12 flex flex-col justify-center bg-gradient-to-br from-slate-900/50 to-slate-950/50 overflow-y-auto no-scrollbar">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 md:mb-8">
@@ -65,11 +65,11 @@ const SpeciesCard: React.FC<{ species: any, index: number, total: number }> = ({
                 {species.localName}
               </div>
             </div>
-            
+
             <p className="text-slate-300 text-sm md:text-lg leading-relaxed mb-6 md:mb-10 font-light drop-shadow-sm">
               {species.description}
             </p>
-            
+
             <div className="pt-5 md:pt-6 border-t border-slate-700/50 mt-auto">
               <h4 className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 md:mb-4">{t.species.keyId}</h4>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4 mb-6 md:mb-8">
@@ -169,7 +169,7 @@ export default function Species() {
 
       {/* Header Content */}
       <div className="container mx-auto px-6 mb-8 relative z-10 text-center md:text-left pt-24 md:pt-32">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -177,7 +177,7 @@ export default function Species() {
         >
           {t.species.title}
         </motion.h2>
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -191,7 +191,7 @@ export default function Species() {
       {/* Vertical Stacking Cards */}
       <div className="relative z-10 w-full mt-10 md:mt-16">
         {speciesList.map((species, index) => (
-          <SpeciesCard 
+          <SpeciesCard
             key={species.id}
             species={species}
             index={index}
@@ -199,7 +199,7 @@ export default function Species() {
           />
         ))}
       </div>
-      
+
       {/* Small extra padding at the bottom so the last card has space before the next section */}
       <div className="h-[20vh] w-full"></div>
     </section>

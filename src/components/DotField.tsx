@@ -47,7 +47,7 @@ const DotField = memo(({
   const propsRef = useRef<any>({});
   
   propsRef.current = { dotRadius, dotSpacing, cursorRadius, cursorForce, bulgeOnly, bulgeStrength, sparkle, waveAmplitude, gradientFrom, gradientTo };
-  const rebuildRef = useRef<() => void>();
+  const rebuildRef = useRef<() => void>(undefined);
   const glowIdRef = useRef(`dot-field-glow-${Math.random().toString(36).slice(2, 9)}`);
 
   useEffect(() => {

@@ -50,7 +50,7 @@ export default function HowItWorks() {
 
       {/* Header */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center md:text-left mb-10 md:mb-16 pt-20 md:pt-32">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -72,7 +72,7 @@ export default function HowItWorks() {
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
-              <motion.div 
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -81,13 +81,13 @@ export default function HowItWorks() {
                 className="w-full"
               >
                 <div className="bg-white/95 backdrop-blur-xl rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-14 shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-slate-100 flex flex-col md:flex-row gap-6 md:gap-16 items-center hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(59,130,246,0.12)] transition-all duration-500 group">
-                  
+
                   {/* Icon Section */}
                   <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-56 md:h-56 shrink-0 flex items-center justify-center mt-4 md:mt-0">
                     <div className={`absolute inset-0 rounded-full border-2 border-dashed opacity-50 ${step.border} group-hover:rotate-12 transition-transform duration-700 ease-out`}></div>
                     <div className={`absolute inset-4 rounded-full opacity-20 ${step.bg} group-hover:scale-110 transition-transform duration-500`}></div>
                     <Icon className={`w-12 h-12 sm:w-16 sm:h-16 md:w-24 md:h-24 relative z-10 ${step.color} group-hover:scale-110 transition-transform duration-500`} strokeWidth={1.5} />
-                    
+
                     <div className="absolute -top-2 -right-2 md:-top-6 md:-right-6 text-[3rem] sm:text-[4rem] md:text-[6rem] font-black italic text-slate-900/5 leading-none select-none pointer-events-none">
                       0{index + 1}
                     </div>
@@ -108,7 +108,7 @@ export default function HowItWorks() {
                       {step.description}
                     </p>
                   </div>
-                  
+
                 </div>
               </motion.div>
             );
@@ -118,7 +118,7 @@ export default function HowItWorks() {
 
       {/* Freshness Scale Visualizer */}
       <div className="py-24 md:py-32 max-w-6xl mx-auto px-4 relative z-10 bg-slate-50 border-t border-slate-200/60 mt-10 md:mt-0">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -132,9 +132,9 @@ export default function HowItWorks() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tighter text-slate-900 px-2">{t.howItWorks.classTitle}</h2>
           </div>
         </motion.div>
-        
+
         <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 md:gap-8">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -153,8 +153,8 @@ export default function HowItWorks() {
               {t.howItWorks.c1_desc}
             </p>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -173,8 +173,8 @@ export default function HowItWorks() {
               {t.howItWorks.c2_desc}
             </p>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
