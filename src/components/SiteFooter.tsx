@@ -49,11 +49,11 @@ export default function SiteFooter({ links, onNavigate }: SiteFooterProps) {
 
   return (
     <footer ref={footerRef} className="overflow-hidden border-t border-black/10 bg-[#F6F6F6] text-[#181818]">
-      <div className="mx-auto max-w-6xl px-4 pt-12 sm:px-6 sm:pt-16">
-        <div className="grid gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-8">
-          <div>
-            <p className="body-6 max-w-xs text-slate-600">{t.footer.desc}</p>
-            <ul className="mt-6 flex flex-wrap gap-2">
+      <div className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 sm:pt-16">
+        <div className="grid gap-8 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
+          <div className="text-center md:text-left">
+            <p className="body-6 mx-auto max-w-xs text-pretty text-slate-600 md:mx-0">{t.footer.desc}</p>
+            <ul className="mt-4 flex flex-wrap justify-center gap-2 md:mt-6 md:justify-start">
               {socials.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -72,33 +72,35 @@ export default function SiteFooter({ links, onNavigate }: SiteFooterProps) {
             </ul>
           </div>
 
-          {columns.map((column) => (
-            <div key={column.title}>
-              <h2 className="title-3">{column.title}</h2>
-              <ul className="mt-4 space-y-3">
-                {column.ids.map((id) => {
-                  const link = links.find((item) => item.id === id);
-                  if (!link) return null;
-                  return (
-                    <li key={link.id}>
-                      <a
-                        href={link.href}
-                        onClick={(event) => onNavigate(event, link.id)}
-                        className="body-6 text-slate-600 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-black"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-6 md:contents">
+            {columns.map((column) => (
+              <div key={column.title}>
+                <h2 className="title-3">{column.title}</h2>
+                <ul className="mt-3 space-y-2 md:mt-4 md:space-y-3">
+                  {column.ids.map((id) => {
+                    const link = links.find((item) => item.id === id);
+                    if (!link) return null;
+                    return (
+                      <li key={link.id}>
+                        <a
+                          href={link.href}
+                          onClick={(event) => onNavigate(event, link.id)}
+                          className="body-6 text-slate-600 hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-black"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       <motion.div
-        className="relative mt-14 overflow-hidden px-2 pr-14 sm:mt-20 sm:pr-16"
+        className="relative mt-8 overflow-hidden px-2 sm:mt-20"
         initial={false}
         animate={{ height: reduce || collapsed ? '0.39em' : '0.86em' }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -121,9 +123,9 @@ export default function SiteFooter({ links, onNavigate }: SiteFooterProps) {
         </p>
       </motion.div>
 
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 border-t border-black/10 px-4 pb-6 pt-5 pr-14 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 border-t border-black/10 px-4 pb-6 pt-5 text-center sm:flex-row sm:justify-center sm:gap-5 sm:px-6">
           <p className="caption-2 text-slate-500">© {new Date().getFullYear()} FISH2FRESH</p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2">
             <Link to="/terms" className="caption-2 text-slate-500 hover:text-black">
               {t.footer.terms}
             </Link>

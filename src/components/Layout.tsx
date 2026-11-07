@@ -3,7 +3,7 @@ import { Translate } from '@phosphor-icons/react';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { useDownload } from '../context/DownloadContext';
+import { notifyAppComingSoon } from './base/buttons/app-store-buttons';
 import { ReactLenis, useLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
 import logoImg from '../../assets/img/logo_img.png';
@@ -52,7 +52,6 @@ function LenisScrollRestoration() {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { language, toggleLanguage, t } = useLanguage();
-  const { startDownload } = useDownload();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState('');
   const location = useLocation();
@@ -134,7 +133,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {language === 'en' ? 'EN' : 'FIL'}
             </button>
 
-            <button type="button" onClick={startDownload} className="btn button-md btn-primary hidden sm:inline-flex">
+            <button type="button" onClick={notifyAppComingSoon} className="btn button-md btn-primary hidden sm:inline-flex">
               {t.nav.getApp}
             </button>
 
@@ -192,7 +191,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   type="button"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    startDownload();
+                    notifyAppComingSoon();
                   }}
                   className="btn button-md btn-primary mt-6 inline-flex w-fit"
                 >

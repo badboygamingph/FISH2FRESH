@@ -6,9 +6,20 @@ import type { AnchorHTMLAttributes } from "react";
 import { cx } from "../../../utils/cx";
 import { toast } from "react-hot-toast";
 
+export const notifyAppComingSoon = () => {
+    toast(
+        <span className="block max-w-[18rem] text-balance text-center text-sm font-medium leading-5">
+            This feature is currently under development.
+            <br />
+            The app will be available soon!
+        </span>,
+        { duration: 4000 },
+    );
+};
+
 const handleStoreClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    toast("This feature is currently under development. The app will be available soon!");
+    notifyAppComingSoon();
 };
 
 export const GooglePlayButton = ({ size = "md", ...props }: AnchorHTMLAttributes<HTMLAnchorElement> & { size?: "md" | "lg" }) => {

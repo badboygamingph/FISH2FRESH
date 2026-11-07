@@ -1,20 +1,25 @@
 import { Facebook, Mail } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import darielImg from '../assets/images/leiradnoznag.webp';
+import janImg from '../../assets/img/logo_imgs.png';
 import gridBg from '../assets/images/squad-grid.png';
 
 const teamMembers = [
   {
     name: 'Dariel Ganzon',
-    role: 'System Developer',
+    role: 'Mobile App Developer',
     image: darielImg,
-    bio: 'Architected and built the entire FISH2FRESH ecosystem, integrating on-device AI with a modern web interface.',
+    bio: 'Built the FISH2FRESH mobile app.',
+    facebook: 'https://www.facebook.com/LeiradNoznag/',
+    email: 'darielganzon2023@gmail.com',
   },
   {
     name: 'Jan Clyde Villavelez',
-    role: 'Assistant Developer',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop',
-    bio: 'Provides essential support in organizing project milestones, user experience testing, and system analysis.',
+    role: 'AI Model Trainer',
+    image: janImg,
+    bio: 'Trained the AI model that checks tuna freshness.',
+    facebook: 'https://www.facebook.com/jan.clyde.9404',
+    email: 'jankuraido@gmail.com',
   },
 ];
 
@@ -46,12 +51,17 @@ export default function Team() {
             Meet the squad.
             <br />
             <em className="font-serif text-[0.92em] font-normal italic capitalize tracking-normal text-slate-400">
-              Know your developers.
+              Know who built it.
             </em>
           </h2>
-          <p className="max-w-sm text-sm text-slate-400 sm:text-base">
-            Two developers. One mission. Read each card for their credentials.
-          </p>
+          <blockquote className="max-w-sm">
+            <p className="text-pretty text-sm text-slate-400 sm:text-base">
+              “We built FISH2FRESH so the market is no longer a guess. Scan the tuna, then decide.”
+            </p>
+            <footer className="mt-3 text-xs font-medium uppercase tracking-widest text-[#D4AF37]">
+              Admin
+            </footer>
+          </blockquote>
         </motion.div>
 
         <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-4 px-4 pb-2 [scrollbar-color:rgba(255,255,255,0.45)_transparent] [scrollbar-width:thin] sm:-mx-6 sm:scroll-pl-6 sm:px-6 lg:mx-auto lg:grid lg:max-w-5xl lg:grid-cols-2 lg:gap-8 lg:overflow-visible lg:px-0 lg:pb-0">
@@ -74,7 +84,7 @@ export default function Team() {
                 0{index + 1}
               </div>
 
-              <div className="absolute bottom-0 left-0 z-30 flex w-full flex-col justify-end p-5 sm:p-6 lg:translate-y-4 lg:p-8 lg:transition-transform lg:duration-500 lg:ease-[cubic-bezier(0.22,1,0.36,1)] lg:group-hover:translate-y-0 lg:group-focus-within:translate-y-0">
+              <div className="absolute bottom-0 left-0 z-30 flex w-full translate-y-0 flex-col justify-end p-5 opacity-100 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:translate-y-0 motion-reduce:transition-opacity sm:p-6 lg:translate-y-4 lg:p-8 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100">
                 <span className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] sm:text-xs">
                   <span className="h-px w-4 bg-[#D4AF37]" />
                   {member.role}
@@ -82,14 +92,20 @@ export default function Team() {
                 <h3 className="mb-2 text-2xl font-black uppercase leading-none tracking-tighter text-white sm:text-3xl lg:text-4xl">
                   {member.name}
                 </h3>
-                <div className="max-h-48 overflow-hidden opacity-100 lg:max-h-0 lg:opacity-0 lg:transition-all lg:duration-500 lg:ease-[cubic-bezier(0.22,1,0.36,1)] lg:group-hover:max-h-48 lg:group-hover:opacity-100 lg:group-focus-within:max-h-48 lg:group-focus-within:opacity-100">
-                  <p className="mb-4 mt-2 text-sm leading-relaxed text-slate-300 sm:text-base">{member.bio}</p>
+                <p className="text-sm leading-relaxed text-slate-300 sm:text-base">{member.bio}</p>
+                <div className="mt-4">
                   <div className="flex items-center justify-end border-t border-white/10 pt-4">
                     <div className="flex items-center gap-3 text-slate-400">
-                      <a href="#facebook" onClick={(e) => e.preventDefault()} aria-label={`${member.name} Facebook`} className="transition-colors hover:text-[#D4AF37]">
+                      <a href={member.facebook} target="_blank" rel="noopener noreferrer" aria-label={`${member.name} Facebook`} className="transition-colors duration-300 hover:text-[#D4AF37]">
                         <Facebook size={18} />
                       </a>
-                      <a href="#email" onClick={(e) => e.preventDefault()} aria-label={`Email ${member.name}`} className="transition-colors hover:text-[#D4AF37]">
+                      <a
+                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(member.email)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Email ${member.name} on Gmail`}
+                        className="transition-colors duration-300 hover:text-[#D4AF37]"
+                      >
                         <Mail size={18} />
                       </a>
                     </div>

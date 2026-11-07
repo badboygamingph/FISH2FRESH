@@ -44,17 +44,18 @@ export default function App() {
               </Suspense>
             </Layout>
           </Router>
-          <Toaster 
+          <Toaster
             position="bottom-center"
+            containerStyle={{ bottom: 24, zIndex: 100 }}
             toastOptions={{
-              duration: 3000,
+              duration: 4000,
               style: {
                 background: '#333',
                 color: '#fff',
-                borderRadius: '100px',
-                padding: '12px 24px',
-                fontSize: '14px',
-                fontWeight: 500,
+                borderRadius: '20px',
+                padding: '14px 20px',
+                maxWidth: 'min(20rem, calc(100vw - 2rem))',
+                textAlign: 'center',
               },
             }}
           />

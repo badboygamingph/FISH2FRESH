@@ -96,7 +96,7 @@ export default function VisualIndicators() {
                 type="button"
                 aria-label={t.indicators.previous}
                 onClick={() => step(-1)}
-                className="absolute top-4 left-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#181818] transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[#F6F6F6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:scale-[0.98] lg:top-1/2 lg:-translate-y-1/2"
+                className="absolute top-1/2 left-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#181818] transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[#F6F6F6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:scale-[0.98]"
               >
                 <CaretLeft size={18} weight="bold" />
               </button>
@@ -104,7 +104,7 @@ export default function VisualIndicators() {
                 type="button"
                 aria-label={t.indicators.next}
                 onClick={() => step(1)}
-                className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#181818] transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[#F6F6F6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:scale-[0.98] lg:top-1/2 lg:-translate-y-1/2"
+                className="absolute top-1/2 right-4 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#181818] transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-[#F6F6F6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black active:scale-[0.98]"
               >
                 <CaretRight size={18} weight="bold" />
               </button>
