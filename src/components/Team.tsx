@@ -16,12 +16,6 @@ const teamMembers = [
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop',
     bio: 'Provides essential support in organizing project milestones, user experience testing, and system analysis.',
   },
-  {
-    name: 'Assistant Dev',
-    role: 'Assistant Developer',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&h=400&auto=format&fit=crop',
-    bio: 'Assists in system development, testing, and optimizing the freshness detection models for peak performance.',
-  },
 ];
 
 export default function Team() {
@@ -56,11 +50,11 @@ export default function Team() {
             </em>
           </h2>
           <p className="max-w-sm text-sm text-slate-400 sm:text-base">
-            Three developers. One mission. Read each card for their credentials.
+            Two developers. One mission. Read each card for their credentials.
           </p>
         </motion.div>
 
-        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-4 px-4 pb-2 [scrollbar-color:rgba(255,255,255,0.45)_transparent] [scrollbar-width:thin] sm:-mx-6 sm:scroll-pl-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:px-0 lg:pb-0">
+        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-4 px-4 pb-2 [scrollbar-color:rgba(255,255,255,0.45)_transparent] [scrollbar-width:thin] sm:-mx-6 sm:scroll-pl-6 sm:px-6 lg:mx-auto lg:grid lg:max-w-5xl lg:grid-cols-2 lg:gap-8 lg:overflow-visible lg:px-0 lg:pb-0">
           {teamMembers.map((member, index) => (
             <article
               key={member.name}

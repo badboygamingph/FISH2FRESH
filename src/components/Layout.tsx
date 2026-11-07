@@ -6,7 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useDownload } from '../context/DownloadContext';
 import { ReactLenis, useLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
-import logoImg from '../assets/images/logo.webp';
+import logoImg from '../../assets/img/logo_img.png';
 import BackToTop from './BackToTop';
 import SiteFooter from './SiteFooter';
 

@@ -25,6 +25,13 @@ export default function App() {
             <meta property="og:description" content="Use FISH2FRESH (also known as Fish 2 Fresh) on-device AI model to classify fish freshness in real-time. Completely offline, secure, and private." />
             <meta property="og:type" content="website" />
             <meta property="og:url" content="https://fish2fresh.vercel.app/" />
+            <meta property="og:image" content="https://fish2fresh.vercel.app/logo_img.png" />
+            <meta property="og:image:alt" content="FISH2FRESH logo" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="https://fish2fresh.vercel.app/logo_img.png" />
+            <meta name="twitter:image:alt" content="FISH2FRESH logo" />
+            <link rel="icon" type="image/png" href="/logo_img.png" />
+            <link rel="apple-touch-icon" href="/logo_img.png" />
           </Helmet>
           <Router>
             <ScrollToTop />
