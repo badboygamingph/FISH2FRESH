@@ -47,12 +47,8 @@ export default function Team() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 flex flex-col gap-6 border-b border-white/10 pb-8 sm:mb-16 lg:mb-24 lg:flex-row lg:items-end lg:justify-between"
         >
-          <h2 className="max-w-2xl text-[2rem] font-black uppercase leading-none tracking-tighter min-[400px]:text-4xl sm:text-5xl lg:text-6xl">
-            Meet the squad.
-            <br />
-            <em className="font-serif text-[0.92em] font-normal italic capitalize tracking-normal text-slate-400">
-              Know who built it.
-            </em>
+          <h2 className="max-w-2xl font-serif text-[2rem] font-normal italic capitalize leading-none tracking-normal text-slate-400 min-[400px]:text-4xl sm:text-5xl lg:text-6xl">
+            Know who built it.
           </h2>
           <blockquote className="max-w-sm">
             <p className="text-pretty text-sm text-slate-400 sm:text-base">
