@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { ArrowLeft, Tag, Activity, Scale, MapPin, Search, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { SITE_URL } from '../seo';
 import bulletImg from '../assets/images/bullet_tuna.jpg';
 import skipjackImg from '../assets/images/skipjack_tuna_1786286515562.webp';
 import yellowfinImg from '../assets/images/yellowfin_tuna.jpg';
@@ -171,6 +172,10 @@ export default function SpeciesDetail() {
   if (!record || !copy) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-white p-8 text-[#181818]">
+        <Helmet>
+          <title>{labels.missingTitle} | FISH2FRESH</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <h1 className="heading-3 mb-4">{labels.missingTitle}</h1>
         <p className="body-3 mb-8 text-slate-600">{labels.missingBody}</p>
         <Link to="/" className="px-6 py-3 bg-blue-600 hover:bg-blue-500 rounded-full font-semibold transition-colors">
@@ -183,8 +188,12 @@ export default function SpeciesDetail() {
   return (
     <div className="min-h-screen bg-white text-[#181818]">
       <Helmet>
-        <title>{copy.name} | FISH2FRESH</title>
+        <title>{`${copy.name} (${copy.localName}) | FISH2FRESH`}</title>
         <meta name="description" content={copy.description} />
+        <link rel="canonical" href={`${SITE_URL}/species/${resolvedId}`} />
+        <meta property="og:title" content={`${copy.name} (${copy.localName}) | FISH2FRESH`} />
+        <meta property="og:description" content={copy.description} />
+        <meta property="og:url" content={`${SITE_URL}/species/${resolvedId}`} />
       </Helmet>
 
       {/* Hero Section */}

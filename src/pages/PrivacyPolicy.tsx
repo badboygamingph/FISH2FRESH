@@ -1,5 +1,7 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '../context/LanguageContext';
+import { SITE_URL } from '../seo';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
@@ -7,8 +9,18 @@ import { ChevronRight, Home } from 'lucide-react';
 export default function PrivacyPolicy() {
   const { language } = useLanguage();
   
+  const title = language === 'en' ? 'Privacy Policy | FISH2FRESH' : 'Patakaran sa Privacy | FISH2FRESH';
+  const description = language === 'en'
+    ? 'FISH2FRESH runs on your phone. The app does not collect, store, or send your photos, personal data, or location.'
+    : 'Tumatakbo ang FISH2FRESH sa telepono. Hindi kinokolekta, iniimbak, o ipinapadala ng app ang iyong mga larawan, personal na data, o lokasyon.';
+
   return (
     <div className="py-20 md:py-32 bg-slate-50 min-h-screen">
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={`${SITE_URL}/privacy`} />
+      </Helmet>
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

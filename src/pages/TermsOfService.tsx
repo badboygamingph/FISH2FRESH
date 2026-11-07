@@ -1,5 +1,7 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '../context/LanguageContext';
+import { SITE_URL } from '../seo';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
@@ -7,8 +9,18 @@ import { ChevronRight, Home } from 'lucide-react';
 export default function TermsOfService() {
   const { language } = useLanguage();
   
+  const title = language === 'en' ? 'Terms of Service | FISH2FRESH' : 'Mga Tuntunin ng Serbisyo | FISH2FRESH';
+  const description = language === 'en'
+    ? 'The terms for downloading and using FISH2FRESH, the offline tuna freshness scanner.'
+    : 'Ang mga tuntunin sa pag-download at paggamit ng FISH2FRESH, ang offline na scanner ng pagkasariwa ng tuna.';
+
   return (
     <div className="py-20 md:py-32 bg-slate-50 min-h-screen">
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={`${SITE_URL}/terms`} />
+      </Helmet>
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

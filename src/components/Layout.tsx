@@ -106,7 +106,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
           <div className="pointer-events-auto flex max-w-full items-center gap-2 rounded-full border border-black/10 bg-white/80 px-3 py-2 backdrop-blur-md">
             <Link to="/" className="flex items-center gap-2 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-black" aria-current={location.pathname === '/' ? 'page' : undefined}>
-              <img src={logoImg} alt="" className="h-8 w-8 object-contain" />
+              <img src={logoImg} alt="FISH2FRESH" className="h-8 w-8 object-contain" />
               <span className="title-3 hidden sm:inline">FISH2FRESH</span>
             </Link>
 
