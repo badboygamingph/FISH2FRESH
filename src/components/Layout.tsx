@@ -1,6 +1,6 @@
-import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
-import { Languages, Menu, X, Github, Linkedin, Twitter } from 'lucide-react';
-import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
+import { Translate } from '@phosphor-icons/react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useDownload } from '../context/DownloadContext';
@@ -8,7 +8,15 @@ import { ReactLenis, useLenis } from 'lenis/react';
 import 'lenis/dist/lenis.css';
 import logoImg from '../assets/images/logo.webp';
 import BackToTop from './BackToTop';
-import DarkVeil from './DarkVeil';
+import SiteFooter from './SiteFooter';
+
+const navItems = [
+  { id: 'features', key: 'features' as const },
+  { id: 'indicators', key: 'analysis' as const },
+  { id: 'species', key: 'species' as const },
+  { id: 'how-it-works', key: 'howItWorks' as const },
+  { id: 'faq', key: 'faq' as const },
+];
 
 function LenisScrollRestoration() {
   const lenis = useLenis();
@@ -32,10 +40,7 @@ function LenisScrollRestoration() {
       if (saved) {
         const y = parseInt(saved, 10);
         lenis.scrollTo(y, { immediate: true });
-        setTimeout(() => lenis.scrollTo(y, { immediate: true }), 100);
-        setTimeout(() => lenis.scrollTo(y, { immediate: true }), 500);
       }
-      // Delay setting isRestored so we don't overwrite the saved value during the initial layout shifts
       setTimeout(() => {
         isRestored.current = true;
       }, 600);
@@ -49,185 +54,160 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { language, toggleLanguage, t } = useLanguage();
   const { startDownload } = useDownload();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState('');
   const location = useLocation();
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+    const sections = navItems
+      .map((item) => document.getElementById(item.id))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible?.target.id) setActiveId(visible.target.id);
+      },
+      { rootMargin: '-40% 0px -45% 0px', threshold: [0.1, 0.4] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [location.pathname]);
+
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     if (location.pathname === '/') {
-      e.preventDefault();
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      event.preventDefault();
+      document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
     }
     setIsMobileMenuOpen(false);
   };
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
+
+  const links = navItems.map((item) => ({
+    id: item.id,
+    href: `/#${item.id}`,
+    label: t.nav[item.key],
+    current: location.pathname === '/' && activeId === item.id,
+  }));
 
   return (
     <ReactLenis root>
       <LenisScrollRestoration />
-      <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900">
-        <motion.div
-          className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-cyan-400 origin-left z-[100]"
-          style={{ scaleX }}
-        />
-        {/* Navigation */}
-        <header className="fixed top-0 inset-x-0 z-50 bg-white/70 backdrop-blur-xl border-b border-slate-200/50 transition-all duration-300">
-          <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-3 text-blue-600 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg">
-              <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                <img src={logoImg} alt="FISH2FRESH Logo" className="w-full h-full object-contain" />
-              </div>
-              <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-900">FISH<span className="text-slate-400 font-light">2</span>FRESH</span>
+      <div className="min-h-screen bg-white text-[#181818]">
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:outline focus:outline-2 focus:outline-black"
+        >
+          {language === 'fil' ? 'Lumaktaw sa nilalaman' : 'Skip to content'}
+        </a>
+
+        <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+          <div className="pointer-events-auto flex max-w-full items-center gap-2 rounded-full border border-black/10 bg-white/80 px-3 py-2 backdrop-blur-md">
+            <Link to="/" className="flex items-center gap-2 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-black" aria-current={location.pathname === '/' ? 'page' : undefined}>
+              <img src={logoImg} alt="" className="h-8 w-8 object-contain" />
+              <span className="title-3 hidden sm:inline">FISH2FRESH</span>
             </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-10 font-medium text-slate-700 text-sm tracking-wide" aria-label="Desktop navigation">
-              <a href="/#features" onClick={(e) => handleNavClick(e, 'features')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.features}</a>
-              <a href="/#indicators" onClick={(e) => handleNavClick(e, 'indicators')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.analysis}</a>
-              <a href="/#species" onClick={(e) => handleNavClick(e, 'species')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.species}</a>
-              <a href="/#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.howItWorks}</a>
-              <a href="/#faq" onClick={(e) => handleNavClick(e, 'faq')} className="hover:text-slate-950 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.faq}</a>
+            <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+              {links.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(event) => handleNavClick(event, link.id)}
+                  aria-current={link.current ? 'true' : undefined}
+                  className={`caption-2 rounded-lg px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-black ${link.current ? 'bg-[#F6F6F6] text-black' : 'text-slate-600 hover:bg-[#F6F6F6]'}`}
+                >
+                  {link.label}
+                </a>
+              ))}
             </nav>
 
-            <div className="flex items-center gap-2 md:gap-4">
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600"
-                aria-label={language === 'en' ? "Switch to Filipino" : "Switch to English"}
-              >
-                <Languages size={18} />
-                <span className="text-sm font-semibold uppercase">{language}</span>
-              </button>
-              <button onClick={startDownload} className="hidden sm:block bg-slate-900 text-white px-5 md:px-6 py-2.5 md:py-3 rounded-full font-semibold hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/20 transition-all duration-300 active:scale-95 text-xs md:text-sm tracking-wide focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2" aria-label={t.nav.getApp}>
-                {t.nav.getApp}
-              </button>
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className="btn inline-flex caption-4 text-slate-700 hover:bg-[#F6F6F6]"
+              aria-label={language === 'en' ? 'Switch to Filipino' : 'Switch to English'}
+            >
+              <Translate size={16} />
+              {language === 'en' ? 'EN' : 'FIL'}
+            </button>
 
-              {/* Mobile Menu Toggle */}
-              <button
-                className="lg:hidden p-2 text-slate-700 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-              >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+            <button type="button" onClick={startDownload} className="btn button-md btn-primary hidden sm:inline-flex">
+              {t.nav.getApp}
+            </button>
+
+            <button
+              type="button"
+              className="relative h-8 w-8 rounded-lg lg:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-black"
+              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              aria-expanded={isMobileMenuOpen}
+              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              <motion.span
+                className="absolute left-2 top-2.5 h-0.5 w-4 bg-black"
+                animate={isMobileMenuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              />
+              <motion.span
+                className="absolute left-2 top-[15px] h-0.5 w-4 bg-black"
+                animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              />
+              <motion.span
+                className="absolute left-2 top-5 h-0.5 w-4 bg-black"
+                animate={isMobileMenuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              />
+            </button>
           </div>
-
-          {/* Mobile Nav Dropdown */}
-          <AnimatePresence>
-            {isMobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="lg:hidden bg-white border-b border-slate-200 overflow-hidden"
-              >
-                <nav className="flex flex-col px-6 py-4 gap-4 font-medium text-slate-700" aria-label="Mobile navigation">
-                  <a href="/#features" onClick={(e) => handleNavClick(e, 'features')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.features}</a>
-                  <a href="/#indicators" onClick={(e) => handleNavClick(e, 'indicators')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.analysis}</a>
-                  <a href="/#species" onClick={(e) => handleNavClick(e, 'species')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.species}</a>
-                  <a href="/#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.howItWorks}</a>
-                  <a href="/#faq" onClick={(e) => handleNavClick(e, 'faq')} className="hover:text-slate-950 transition-colors py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-sm">{t.nav.faq}</a>
-                  <button onClick={() => { setIsMobileMenuOpen(false); startDownload(); }} className="sm:hidden w-full bg-slate-900 text-white px-6 py-3 rounded-full font-semibold mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2" aria-label={t.nav.getApp}>
-                    {t.nav.getApp}
-                  </button>
-                </nav>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </header>
 
-        {/* Main Content */}
-        <main className="pt-20 md:pt-24">
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <nav className="flex h-full flex-col justify-center gap-2 px-8" aria-label="Mobile">
+                {links.map((link, index) => (
+                  <motion.a
+                    key={link.id}
+                    href={link.href}
+                    onClick={(event) => handleNavClick(event, link.id)}
+                    aria-current={link.current ? 'true' : undefined}
+                    className="heading-3 rounded-lg py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-black"
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: Math.min(index * 0.06, 0.4), ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {link.label}
+                  </motion.a>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    startDownload();
+                  }}
+                  className="btn button-md btn-primary mt-6 inline-flex w-fit"
+                >
+                  {t.nav.getApp}
+                </button>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <main id="content" className="pt-24">
           {children}
         </main>
 
-        <footer className="relative overflow-hidden pt-16 pb-8 md:pt-24 md:pb-12" style={{ backgroundColor: '#100e0b' }}>
-          {/* Carbon Glass Aura Gradient Layers */}
-          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" style={{ mixBlendMode: 'screen', opacity: 0.8 }}>
-            <DarkVeil hueShift={20} saturation={3.0} warpAmount={0.015} speed={0.4} />
-          </div>
-
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-              {/* Brand Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="lg:col-span-2 space-y-6"
-              >
-                <Link to="/" className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-lg w-fit">
-                  <div className="w-10 h-10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                    <img src={logoImg} alt="FISH2FRESH Logo" className="w-full h-full object-contain" />
-                  </div>
-                  <span className="text-2xl font-black tracking-tighter text-white">FISH<span className="text-slate-400 font-light">2</span>FRESH</span>
-                </Link>
-                <p className="text-sm leading-relaxed text-slate-300 max-w-sm">
-                  {t.footer.desc}
-                </p>
-                <div className="flex gap-4">
-                  <a href="#" aria-label="GitHub" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:border-white/20 hover:bg-white/10 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
-                    <Github className="h-5 w-5" aria-hidden="true" />
-                  </a>
-                  <a href="#" aria-label="Twitter" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-300 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-900/20 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
-                    <Twitter className="h-5 w-5" aria-hidden="true" />
-                  </a>
-                  <a href="#" aria-label="LinkedIn" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-300 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-900/20 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600">
-                    <Linkedin className="h-5 w-5" aria-hidden="true" />
-                  </a>
-                </div>
-              </motion.div>
-
-              {/* Links Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <h3 className="text-sm font-bold tracking-wider text-white uppercase">{t.footer.product}</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  <li><a href="/#features" onClick={(e) => handleNavClick(e, 'features')} className="text-sm text-slate-400 hover:text-white transition-colors font-medium">{t.nav.features}</a></li>
-                  <li><a href="/#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')} className="text-sm text-slate-400 hover:text-white transition-colors font-medium">{t.nav.howItWorks}</a></li>
-                  <li><a href="/#species" onClick={(e) => handleNavClick(e, 'species')} className="text-sm text-slate-400 hover:text-white transition-colors font-medium">{t.nav.species}</a></li>
-                </ul>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <h3 className="text-sm font-bold tracking-wider text-white uppercase">{t.footer.legal}</h3>
-                <ul role="list" className="mt-6 space-y-4">
-                  <li><Link to="/privacy" className="text-sm text-slate-400 hover:text-white transition-colors font-medium">{t.footer.privacy}</Link></li>
-                  <li><Link to="/terms" className="text-sm text-slate-400 hover:text-white transition-colors font-medium">{t.footer.terms}</Link></li>
-                </ul>
-              </motion.div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-16 pt-8 border-t border-white/10 flex justify-center md:justify-start items-center"
-            >
-              <p className="text-sm text-slate-400 font-medium text-center md:text-left">
-                &copy; {new Date().getFullYear()} FISH2FRESH. All rights reserved.
-              </p>
-            </motion.div>
-          </div>
-        </footer>
+        <SiteFooter links={links} onNavigate={handleNavClick} />
         <BackToTop />
       </div>
     </ReactLenis>

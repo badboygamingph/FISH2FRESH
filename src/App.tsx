@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { lazy, Suspense } from 'react';
 import Layout from './components/Layout';
@@ -10,7 +10,6 @@ import { Toaster } from 'react-hot-toast';
 const Home = lazy(() => import('./pages/Home'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
-const Demo = lazy(() => import('./pages/Demo'));
 const SpeciesDetail = lazy(() => import('./pages/SpeciesDetail'));
 
 export default function App() {
@@ -35,7 +34,7 @@ export default function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<TermsOfService />} />
-                  <Route path="/demo" element={<Demo />} />
+                  <Route path="/demo" element={<Navigate to="/" replace />} />
                   <Route path="/species/:id" element={<SpeciesDetail />} />
                 </Routes>
               </Suspense>

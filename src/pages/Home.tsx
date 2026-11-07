@@ -1,21 +1,23 @@
 import Hero from '../components/Hero';
 import Features from '../components/Features';
-import VisualIndicators from '../components/VisualIndicators';
-import Species from '../components/Species';
+import Tagline from '../components/Tagline';
 import HowItWorks from '../components/HowItWorks';
-import Team from '../components/Team';
+import Species from '../components/Species';
+import VisualIndicators from '../components/VisualIndicators';
 import FAQ from '../components/FAQ';
+import Team from '../components/Team';
 
 export default function Home() {
   return (
     <>
       <Hero />
       <Features />
-      <VisualIndicators />
-      <Species />
+      <Tagline />
       <HowItWorks />
-      <Team />
+      <Species />
+      <VisualIndicators />
       <FAQ />
+      <Team />
     </>
   );
 }

@@ -22,7 +22,7 @@ export default function ScrollToTop() {
 
     // Path changed! Scroll to top
     prevPathname.current = pathname;
-    
+
     // If there is a hash, let the browser handle scrolling to it after a short delay
     if (hash) {
       setTimeout(() => {

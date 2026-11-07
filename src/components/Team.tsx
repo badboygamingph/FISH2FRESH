@@ -1,149 +1,108 @@
-import React from 'react';
 import { Facebook, Mail } from 'lucide-react';
-import { motion } from 'motion/react';
-
+import { motion, useReducedMotion } from 'motion/react';
 import darielImg from '../assets/images/leiradnoznag.webp';
+import gridBg from '../assets/images/squad-grid.png';
+
+const teamMembers = [
+  {
+    name: 'Dariel Ganzon',
+    role: 'System Developer',
+    image: darielImg,
+    bio: 'Architected and built the entire FISH2FRESH ecosystem, integrating on-device AI with a modern web interface.',
+  },
+  {
+    name: 'Jan Clyde Villavelez',
+    role: 'Assistant Developer',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop',
+    bio: 'Provides essential support in organizing project milestones, user experience testing, and system analysis.',
+  },
+  {
+    name: 'Assistant Dev',
+    role: 'Assistant Developer',
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&h=400&auto=format&fit=crop',
+    bio: 'Assists in system development, testing, and optimizing the freshness detection models for peak performance.',
+  },
+];
 
 export default function Team() {
-  const teamMembers = [
-    {
-      name: 'Dariel Ganzon',
-      role: 'System Developer',
-      subRole: 'Architect & Lead Engineer',
-      image: darielImg,
-      bio: 'Architected and built the entire FISH2FRESH ecosystem, integrating on-device AI with a modern web interface.',
-      socials: { facebook: '#', mail: '#' }
-    },
-    {
-      name: 'Jan Clyde Villavelez',
-      role: 'Assistant Developer',
-      subRole: 'Project Manager & UX Analyst',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop',
-      bio: 'Provides essential support in organizing project milestones, user experience testing, and system analysis.',
-      socials: { facebook: '#', mail: '#' }
-    },
-    {
-      name: 'Assistant Dev',
-      role: 'Assistant Developer',
-      subRole: 'Model Optimization & Testing',
-      image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&h=400&auto=format&fit=crop',
-      bio: 'Assists in system development, testing, and optimizing the freshness detection models for peak performance.',
-      socials: { facebook: '#', mail: '#' }
-    }
-  ];
+  const reduce = useReducedMotion();
 
   return (
-    <section id="team" className="text-white relative py-24 md:py-32" style={{ backgroundColor: '#100e0b' }}>
+    <section id="team" className="relative overflow-hidden bg-black py-16 text-white sm:py-24 lg:py-32">
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        aria-hidden="true"
+        style={{
+          backgroundColor: '#050505',
+          backgroundImage: `url(${gridBg})`,
+          backgroundRepeat: 'repeat',
+          backgroundSize: '420px auto',
+        }}
+      />
 
-      {/* Obsidian Background Layers */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Layer 1 - normal */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #030303 0%, #111111 42%, #1c1c1c 72%, #090909 100%)", mixBlendMode: "normal", pointerEvents: "none", transform: "translateZ(0)" }} aria-hidden="true" />
-        {/* Layer 2 - screen */}
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 45% 55% at 68% 38%, rgba(161,161,170,0.16) 0%, transparent 65%)", mixBlendMode: "screen", filter: "blur(18px)", pointerEvents: "none", transform: "translateZ(0)" }} aria-hidden="true" />
-        {/* Film-grain overlay */}
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, mixBlendMode: "overlay", opacity: 0.85, pointerEvents: "none" }}>
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <filter id="grain">
-              <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" stitchTiles="stitch" />
-              <feColorMatrix type="matrix" values="0.181 0.608 0.061 0 0.075 0.181 0.608 0.061 0 0.075 0.181 0.608 0.061 0 0.075 0 0 0 1 0" />
-            </filter>
-            <rect width="100%" height="100%" filter="url(#grain)" />
-          </svg>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-
-        {/* Section Heading matching ROS Legacy */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={reduce ? false : { opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/10 pb-8"
+          className="mb-10 flex flex-col gap-6 border-b border-white/10 pb-8 sm:mb-16 lg:mb-24 lg:flex-row lg:items-end lg:justify-between"
         >
-          <div className="max-w-2xl">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tighter leading-[1]">
-              Meet the squad.<br />
-              <em className="text-slate-400 font-serif italic font-normal tracking-normal capitalize">Know your developers.</em>
-            </h2>
-          </div>
-          <p className="text-slate-400 text-sm md:text-base max-w-sm">
-            Three developers. One mission. Hover or focus a card to view their credentials.
+          <h2 className="max-w-2xl text-[2rem] font-black uppercase leading-none tracking-tighter min-[400px]:text-4xl sm:text-5xl lg:text-6xl">
+            Meet the squad.
+            <br />
+            <em className="font-serif text-[0.92em] font-normal italic capitalize tracking-normal text-slate-400">
+              Know your developers.
+            </em>
+          </h2>
+          <p className="max-w-sm text-sm text-slate-400 sm:text-base">
+            Three developers. One mission. Read each card for their credentials.
           </p>
         </motion.div>
 
-        {/* Grid matching ROS Legacy */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-4 px-4 pb-2 [scrollbar-color:rgba(255,255,255,0.45)_transparent] [scrollbar-width:thin] sm:-mx-6 sm:scroll-pl-6 sm:px-6 lg:mx-0 lg:grid lg:grid-cols-3 lg:gap-8 lg:overflow-visible lg:px-0 lg:pb-0">
           {teamMembers.map((member, index) => (
-            <motion.article
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
-              key={index}
-              className="relative group h-[450px] md:h-[550px] bg-black overflow-hidden border border-white/5 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            <article
+              key={member.name}
               tabIndex={0}
+              className="group relative h-[28rem] w-[min(20rem,calc(100vw-4.5rem))] shrink-0 snap-start cursor-pointer overflow-hidden border border-white/5 bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] sm:h-[32rem] lg:h-[34rem] lg:w-auto lg:shrink"
             >
-              {/* Image with zoom effect */}
               <img
                 src={member.image}
                 alt={member.name}
-                className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-105"
+                className="absolute inset-0 h-full w-full object-cover opacity-80 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] lg:opacity-60 lg:grayscale lg:group-hover:scale-105 lg:group-hover:opacity-100 lg:group-hover:grayscale-0 lg:group-focus-within:scale-105 lg:group-focus-within:opacity-100 lg:group-focus-within:grayscale-0"
               />
-
-              {/* Overlay Gradient (Bottom to Top) */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              {/* Tactical Border Elements */}
-              <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/20 group-hover:border-[#D4AF37] transition-colors duration-500 z-20 m-4"></div>
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/20 group-hover:border-[#D4AF37] transition-colors duration-500 z-20 m-4"></div>
-
-              {/* Scanline Effect */}
-              <div className="absolute inset-0 pointer-events-none z-10 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-20"></div>
-
-              {/* Large Background Number */}
-              <div className="absolute top-6 right-6 text-5xl md:text-6xl font-black italic text-white/10 group-hover:text-white/20 transition-colors duration-500 z-20 mix-blend-overlay">
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+              <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-20" />
+              <div className="absolute left-4 top-4 z-20 h-8 w-8 border-l border-t border-white/20 transition-colors duration-500 group-hover:border-[#D4AF37] group-focus-within:border-[#D4AF37]" />
+              <div className="absolute bottom-4 right-4 z-20 h-8 w-8 border-b border-r border-white/20 transition-colors duration-500 group-hover:border-[#D4AF37] group-focus-within:border-[#D4AF37]" />
+              <div className="absolute right-4 top-4 z-20 text-5xl font-black italic text-white/10 mix-blend-overlay sm:text-6xl">
                 0{index + 1}
               </div>
 
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 z-30 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">
-
-                <span className="text-[#D4AF37] font-bold uppercase tracking-widest text-[10px] md:text-xs mb-3 flex items-center gap-2">
-                  <span className="w-4 h-[1px] bg-[#D4AF37]"></span>
+              <div className="absolute bottom-0 left-0 z-30 flex w-full flex-col justify-end p-5 sm:p-6 lg:translate-y-4 lg:p-8 lg:transition-transform lg:duration-500 lg:ease-[cubic-bezier(0.22,1,0.36,1)] lg:group-hover:translate-y-0 lg:group-focus-within:translate-y-0">
+                <span className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] sm:text-xs">
+                  <span className="h-px w-4 bg-[#D4AF37]" />
                   {member.role}
                 </span>
-
-                <h3 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white mb-2 leading-none">
+                <h3 className="mb-2 text-2xl font-black uppercase leading-none tracking-tighter text-white sm:text-3xl lg:text-4xl">
                   {member.name}
                 </h3>
-
-                <div className="overflow-hidden transition-all duration-500 ease-out max-h-0 opacity-0 group-hover:max-h-48 group-hover:opacity-100">
-                  <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 mt-2">
-                    {member.bio}
-                  </p>
-
-                  {/* Tactical View Link / Socials */}
+                <div className="max-h-48 overflow-hidden opacity-100 lg:max-h-0 lg:opacity-0 lg:transition-all lg:duration-500 lg:ease-[cubic-bezier(0.22,1,0.36,1)] lg:group-hover:max-h-48 lg:group-hover:opacity-100 lg:group-focus-within:max-h-48 lg:group-focus-within:opacity-100">
+                  <p className="mb-4 mt-2 text-sm leading-relaxed text-slate-300 sm:text-base">{member.bio}</p>
                   <div className="flex items-center justify-end border-t border-white/10 pt-4">
-                    <div className="flex items-center gap-3">
-                      {member.socials.facebook && (
-                        <a href={member.socials.facebook} onClick={(e) => e.preventDefault()} aria-label={`${member.name} Facebook`} className="text-slate-400 hover:text-[#D4AF37] transition-colors">
-                          <Facebook size={18} />
-                        </a>
-                      )}
-                      {member.socials.mail && (
-                        <a href={member.socials.mail} onClick={(e) => e.preventDefault()} aria-label={`Email ${member.name}`} className="text-slate-400 hover:text-[#D4AF37] transition-colors">
-                          <Mail size={18} />
-                        </a>
-                      )}
+                    <div className="flex items-center gap-3 text-slate-400">
+                      <a href="#facebook" onClick={(e) => e.preventDefault()} aria-label={`${member.name} Facebook`} className="transition-colors hover:text-[#D4AF37]">
+                        <Facebook size={18} />
+                      </a>
+                      <a href="#email" onClick={(e) => e.preventDefault()} aria-label={`Email ${member.name}`} className="transition-colors hover:text-[#D4AF37]">
+                        <Mail size={18} />
+                      </a>
                     </div>
                   </div>
                 </div>
-
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>

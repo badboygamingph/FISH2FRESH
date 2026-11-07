@@ -145,7 +145,7 @@ export default function VideoShowcase() {
                   {t.showcase.scanning}
                 </div>
                 <div className="hidden sm:block bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700/60 font-mono text-[11px]">
-                  Auxis thazard (Frigate Tuna / Pirit)
+                  {t.showcase.scanTarget}
                 </div>
               </div>
             </div>
