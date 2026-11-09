@@ -112,23 +112,17 @@ export default function SiteFooter({ links, onNavigate }: SiteFooterProps) {
 
       <div
         ref={bannerContainerRef}
-        className="relative mt-8 flex w-full items-center justify-center overflow-hidden px-3 py-6 sm:mt-16 sm:px-6 sm:py-10"
+        className="relative mt-8 flex w-full flex-col items-center justify-center overflow-hidden px-4 py-8 sm:mt-16 sm:px-6 sm:py-14"
       >
         <div
           ref={bannerTextRef}
           style={{
-            fontFamily: '"Outfit", Manrope, sans-serif',
-            fontWeight: 500,
-            fontSize: 'clamp(1.5rem, 5.2vw, 5.5rem)',
-            lineHeight: 1,
-            letterSpacing: '-0.045em',
-            WebkitTextStroke: 'clamp(0.75px, 0.12vw, 1.25px) #181818',
-            color: 'transparent',
+            fontFamily: 'Manrope, sans-serif',
             transform: `scale(${scale})`,
             transformOrigin: 'center center',
             transition: 'transform 0.15s ease-out',
           }}
-          className="select-none text-center uppercase whitespace-nowrap will-change-transform"
+          className="select-none text-center text-2xl font-bold tracking-tight text-[#181818] sm:text-4xl md:text-5xl lg:text-6xl whitespace-nowrap will-change-transform"
         >
           <SwappingText
             key={language}
