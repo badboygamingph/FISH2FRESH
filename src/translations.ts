@@ -125,9 +125,9 @@ export const translations = {
       quotes: [
         'FISH2FRESH Know Before You Buy',
         'FISH2FRESH Scan Tuna Then Decide',
-        'FISH2FRESH Buy With Absolute Confidence',
-        'FISH2FRESH Fast Offline Market Scanner',
-        'FISH2FRESH No Guesswork At Market'
+        'FISH2FRESH Buy With Confidence',
+        'FISH2FRESH Fast Offline Scanner',
+        'FISH2FRESH No More Guesswork'
       ]
     },
     team: {
@@ -264,11 +264,11 @@ export const translations = {
       terms: 'Mga Tuntunin ng Serbisyo',
       offline: '100% Offline Ready',
       quotes: [
-        'FISH2FRESH Alamin Bago Mo Bayaran',
-        'FISH2FRESH Suriin ang Tuna Ngayon',
-        'FISH2FRESH Bumili Nang May Kumpyansa',
-        'FISH2FRESH Mabilisang Pagsusuri sa Palengke',
-        'FISH2FRESH Walang Panghuhula sa Isda'
+        'FISH2FRESH Alamin Bago Bayaran',
+        'FISH2FRESH Suriin Bago Magdesisyon',
+        'FISH2FRESH Bumili Nang Panatag',
+        'FISH2FRESH Mabilis sa Palengke',
+        'FISH2FRESH Iwasan ang Bilasa'
       ]
     },
     team: {

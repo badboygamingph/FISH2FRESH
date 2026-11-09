@@ -62,12 +62,48 @@ export function ParallaxCarousel({
   const imgRefs = useRef<HTMLImageElement[]>([]);
 
   const carouselItems: ParallaxCarouselItem[] = useMemo(() => {
-    if (items && items.length > 0) return items;
-    if (images && images.length > 0) {
-      return images.map((src) => ({ src }));
+    let base: ParallaxCarouselItem[];
+    if (items && items.length > 0) base = items;
+    else if (images && images.length > 0) {
+      base = images.map((src) => ({ src }));
+    } else {
+      base = DEFAULT_ITEMS;
     }
-    return DEFAULT_ITEMS;
-  }, [images, items]);
+
+    // For seamless infinite looping on wider displays, ensure at least 6 cards
+    if (loop && base.length > 0 && base.length < 6) {
+      const repeats = Math.ceil(6 / base.length);
+      const extended: ParallaxCarouselItem[] = [];
+      for (let r = 0; r < repeats; r++) {
+        extended.push(...base);
+      }
+      return extended;
+    }
+    return base;
+  }, [images, items, loop]);
+
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const update = () => setContainerWidth(el.clientWidth);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Adapt card width on smaller devices so a peek of the next card is visible
+  const effectiveWidth = useMemo(() => {
+    if (!containerWidth) return imageWidth;
+    return Math.min(imageWidth, Math.max(220, containerWidth - 48));
+  }, [containerWidth, imageWidth]);
+
+  const effectiveHeight = useMemo(() => {
+    if (!imageWidth) return imageHeight;
+    return Math.round((effectiveWidth / imageWidth) * imageHeight);
+  }, [effectiveWidth, imageWidth, imageHeight]);
 
   const [isDragging, setIsDragging] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -79,17 +115,17 @@ export function ParallaxCarousel({
     startX: 0,
     dragStartX: 0,
     isPointerDown: false,
-    itemStride: imageWidth + gap,
-    totalWidth: carouselItems.length * (imageWidth + gap),
+    itemStride: effectiveWidth + gap,
+    totalWidth: carouselItems.length * (effectiveWidth + gap),
     minX: 0,
     maxX: 0,
   });
 
   useEffect(() => {
-    const stride = imageWidth + gap;
+    const stride = effectiveWidth + gap;
     stateRef.current.itemStride = stride;
     stateRef.current.totalWidth = carouselItems.length * stride;
-  }, [imageWidth, gap, carouselItems.length]);
+  }, [effectiveWidth, gap, carouselItems.length]);
 
   const clampPosition = useCallback((target: number, containerW: number) => {
     if (loop) return target;
@@ -140,14 +176,14 @@ export function ParallaxCarousel({
         plane.style.transform = `translate3d(${x}px, 0, 0)`;
 
         // Calculate card's center relative to container
-        const cardCenter = containerRect.left + x + imageWidth / 2;
+        const cardCenter = containerRect.left + x + effectiveWidth / 2;
         const distFromCenter = cardCenter - containerCenter;
         const normalized = Math.max(-1.5, Math.min(1.5, distFromCenter / (containerW / 2)));
 
         // Counter-shift inner image for parallax depth
         const img = imgRefs.current[i];
         if (img) {
-          const maxShift = (imageWidth * (1 / uvScale - 1)) * 0.5;
+          const maxShift = (effectiveWidth * (1 / uvScale - 1)) * 0.5;
           const shiftX = -normalized * maxShift * parallaxIntensity;
           img.style.transform = `scale(${1 / uvScale}) translate3d(${shiftX}px, 0, 0)`;
         }
@@ -216,7 +252,7 @@ export function ParallaxCarousel({
         onPointerCancel={handlePointerUp}
         onWheel={handleWheel}
         style={{
-          height: `${imageHeight}px`,
+          height: `${effectiveHeight}px`,
           cursor: isDragging ? 'grabbing' : 'grab',
           touchAction: 'pan-y',
         }}
@@ -230,8 +266,8 @@ export function ParallaxCarousel({
                 if (el) planesRef.current[index] = el;
               }}
               style={{
-                width: `${imageWidth}px`,
-                height: `${imageHeight}px`,
+                width: `${effectiveWidth}px`,
+                height: `${effectiveHeight}px`,
                 borderRadius: `${borderRadius}px`,
               }}
               className="absolute top-0 left-0 overflow-hidden border border-black/10 bg-[#F6F6F6] shadow-sm will-change-transform"

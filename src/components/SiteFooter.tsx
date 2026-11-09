@@ -1,5 +1,6 @@
 import { InstagramLogo, LinkedinLogo, XLogo, YoutubeLogo } from '@phosphor-icons/react';
 import type { MouseEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { SwappingText } from '@animate-ui/react/primitives/texts/swapping';
@@ -24,6 +25,33 @@ const socials = [
 
 export default function SiteFooter({ links, onNavigate }: SiteFooterProps) {
   const { language, t } = useLanguage();
+  const bannerContainerRef = useRef<HTMLDivElement>(null);
+  const bannerTextRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const updateScale = () => {
+      const container = bannerContainerRef.current;
+      const text = bannerTextRef.current;
+      if (!container || !text) return;
+      const containerW = container.clientWidth - 24;
+      const textW = text.scrollWidth;
+      if (textW > 0 && containerW > 0) {
+        setScale(Math.min(1, containerW / textW));
+      }
+    };
+
+    updateScale();
+    const ro = new ResizeObserver(updateScale);
+    if (bannerContainerRef.current) ro.observe(bannerContainerRef.current);
+    if (bannerTextRef.current) ro.observe(bannerTextRef.current);
+    window.addEventListener('resize', updateScale);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', updateScale);
+    };
+  }, [language]);
 
   const columns = [
     { title: t.footer.product, ids: ['features', 'how-it-works', 'species'] },
@@ -82,18 +110,25 @@ export default function SiteFooter({ links, onNavigate }: SiteFooterProps) {
         </div>
       </div>
 
-      <div className="relative mt-8 flex justify-center overflow-hidden px-4 py-8 sm:mt-16 sm:py-12">
+      <div
+        ref={bannerContainerRef}
+        className="relative mt-8 flex w-full items-center justify-center overflow-hidden px-3 py-6 sm:mt-16 sm:px-6 sm:py-10"
+      >
         <div
+          ref={bannerTextRef}
           style={{
             fontFamily: '"Outfit", Manrope, sans-serif',
             fontWeight: 500,
-            fontSize: 'clamp(1.35rem, 4.6vw, 5.25rem)',
-            lineHeight: 0.9,
+            fontSize: 'clamp(1.5rem, 5.2vw, 5.5rem)',
+            lineHeight: 1,
             letterSpacing: '-0.045em',
-            WebkitTextStroke: '1px #181818',
+            WebkitTextStroke: 'clamp(0.75px, 0.12vw, 1.25px) #181818',
             color: 'transparent',
+            transform: `scale(${scale})`,
+            transformOrigin: 'center center',
+            transition: 'transform 0.15s ease-out',
           }}
-          className="select-none text-center uppercase whitespace-nowrap"
+          className="select-none text-center uppercase whitespace-nowrap will-change-transform"
         >
           <SwappingText
             key={language}
