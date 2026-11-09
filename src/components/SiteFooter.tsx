@@ -86,12 +86,14 @@ export default function SiteFooter({ links, onNavigate }: SiteFooterProps) {
         <div
           style={{
             fontFamily: '"Outfit", Manrope, sans-serif',
-            fontSize: 'clamp(1.25rem, 5vw, 4.5rem)',
-            fontWeight: 700,
-            letterSpacing: '-0.035em',
-            lineHeight: 1.15,
+            fontWeight: 500,
+            fontSize: 'clamp(1.35rem, 4.6vw, 5.25rem)',
+            lineHeight: 0.9,
+            letterSpacing: '-0.045em',
+            WebkitTextStroke: '1px #181818',
+            color: 'transparent',
           }}
-          className="select-none text-center tracking-tight text-[#181818]"
+          className="select-none text-center uppercase whitespace-nowrap"
         >
           <SwappingText
             key={language}
