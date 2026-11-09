@@ -7,7 +7,7 @@ import BlurText from './BlurText';
 import GradientASCII from './GradientASCII';
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [scenarioIndex, setScenarioIndex] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
@@ -79,8 +79,9 @@ export default function Hero() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid grid-cols-1 items-center gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="relative z-20 w-full max-w-xl text-left">
+          <div className="relative z-20 w-full max-w-[42.5rem] text-left">
             <motion.div
+              key={language}
               style={reduce ? undefined : { y: textY, opacity: textOpacity }}
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}

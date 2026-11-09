@@ -121,7 +121,23 @@ export const translations = {
       legal: 'Legal',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
-      offline: '100% Offline Ready'
+      offline: '100% Offline Ready',
+      quotes: [
+        'FISH2FRESH Know Before You Buy',
+        'FISH2FRESH Scan Tuna Then Decide',
+        'FISH2FRESH Buy With Absolute Confidence',
+        'FISH2FRESH Fast Offline Market Scanner',
+        'FISH2FRESH No Guesswork At Market'
+      ]
+    },
+    team: {
+      title: 'Know who built it.',
+      quote: '“We built FISH2FRESH so the market is no longer a guess. Scan the tuna, then decide.”',
+      admin: 'Admin',
+      member1_role: 'Mobile App Developer',
+      member1_bio: 'Built the FISH2FRESH mobile app.',
+      member2_role: 'AI Model Trainer',
+      member2_bio: 'Trained the AI model that checks tuna freshness.'
     }
   },
   fil: {
@@ -134,10 +150,10 @@ export const translations = {
       getApp: 'I-download'
     },
     hero: {
-      title1: 'Huwag Nang Bumili ng',
-      title2: 'Bilasa',
+      title1: 'Huwag Nang Bumili',
+      title2: 'ng Bilasang Isda',
       title3: 'sa Palengke.',
-      desc1: 'Gumagamit ang FISH2FRESH ng AI sa loob ng telepono para malaman agad ang pagkasariwa ng Pirit (Bullet Tuna), Tulingan (Skipjack Tuna), at Karaw (Yellowfin Tuna).',
+      desc1: 'Sinisuri ng FISH2FRESH ang Pirit (Bullet Tuna), Tulingan (Skipjack Tuna), at Karaw (Yellowfin Tuna) sa iyong telepono.',
       desc2: 'Hindi kailangan ng internet.',
       download: 'I-download (Android)',
       target: 'Natukoy na Isda',
@@ -246,7 +262,23 @@ export const translations = {
       legal: 'Legal',
       privacy: 'Patakaran sa Privacy',
       terms: 'Mga Tuntunin ng Serbisyo',
-      offline: '100% Offline Ready'
+      offline: '100% Offline Ready',
+      quotes: [
+        'FISH2FRESH Alamin Bago Mo Bayaran',
+        'FISH2FRESH Suriin ang Tuna Ngayon',
+        'FISH2FRESH Bumili Nang May Kumpyansa',
+        'FISH2FRESH Mabilisang Pagsusuri sa Palengke',
+        'FISH2FRESH Walang Panghuhula sa Isda'
+      ]
+    },
+    team: {
+      title: 'Alamin kung sino ang bumuo nito.',
+      quote: '“Binuo namin ang FISH2FRESH para hindi na manghula sa palengke. Suriin ang tuna bago magdesisyon.”',
+      admin: 'Admin',
+      member1_role: 'Mobile App Developer',
+      member1_bio: 'Bumuo ng mobile app ng FISH2FRESH.',
+      member2_role: 'AI Model Trainer',
+      member2_bio: 'Nagsanay sa AI model na sumusuri sa pagkasariwa ng tuna.'
     }
   }
 };

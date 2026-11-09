@@ -1,0 +1,14 @@
+---
+description: On any design prompt, read and follow the AI design skill files before designing or writing UI
+alwaysApply: true
+---
+
+# Design prompts use the design skills
+
+When a prompt is about design, UI, layout, styling, landing pages, marketing pages, page sections, components, visual systems, conversion copy, or Figma, read the matching skill file and follow it before you design or change the interface.
+
+- Web, landing page, component, layout, type, spacing, color, motion, or page copy: read `.cursor/skills/landing-page-design/SKILL.md` and follow it.
+- Figma screens, mockups, components, tokens, or a figma.com link: read `.cursor/skills/figma-designer/SKILL.md` and follow it.
+- A prompt that covers both: read both files. Use the landing-page skill for structure and visuals, and the Figma skill for anything built in Figma.
+
+Do this even when the user does not name the skill or say "design." The skill file wins over framework defaults. An explicit instruction in the user's prompt wins over the skill.

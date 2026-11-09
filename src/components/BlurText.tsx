@@ -91,7 +91,7 @@ const BlurText = ({
   const ComponentAny = Component as any;
 
   return (
-    <ComponentAny ref={ref} className={className} style={{ display: 'inline-flex', flexWrap: 'wrap' }}>
+    <ComponentAny ref={ref} className={className} style={{ display: 'inline' }}>
       {elements.map((segment: string, index: number) => {
         const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 
@@ -105,7 +105,7 @@ const BlurText = ({
         return (
           <motion.span
             className="inline-block will-change-[transform,filter,opacity]"
-            key={index}
+            key={`${segment}-${index}`}
             initial={fromSnapshot}
             animate={inView ? animateKeyframes : fromSnapshot}
             transition={spanTransition}

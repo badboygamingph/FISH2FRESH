@@ -3,28 +3,30 @@ import { motion, useReducedMotion } from 'motion/react';
 import darielImg from '../assets/images/leiradnoznag.webp';
 import janImg from '../../assets/img/logo_imgs.png';
 import gridBg from '../assets/images/squad-grid.png';
-
-const teamMembers = [
-  {
-    name: 'Dariel Ganzon',
-    role: 'Mobile App Developer',
-    image: darielImg,
-    bio: 'Built the FISH2FRESH mobile app.',
-    facebook: 'https://www.facebook.com/LeiradNoznag/',
-    email: 'darielganzon2023@gmail.com',
-  },
-  {
-    name: 'Jan Clyde Villavelez',
-    role: 'AI Model Trainer',
-    image: janImg,
-    bio: 'Trained the AI model that checks tuna freshness.',
-    facebook: 'https://www.facebook.com/jan.clyde.9404',
-    email: 'jankuraido@gmail.com',
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Team() {
+  const { t } = useLanguage();
   const reduce = useReducedMotion();
+
+  const teamMembers = [
+    {
+      name: 'Dariel Ganzon',
+      role: t.team.member1_role,
+      image: darielImg,
+      bio: t.team.member1_bio,
+      facebook: 'https://www.facebook.com/LeiradNoznag/',
+      email: 'darielganzon2023@gmail.com',
+    },
+    {
+      name: 'Jan Clyde Villavelez',
+      role: t.team.member2_role,
+      image: janImg,
+      bio: t.team.member2_bio,
+      facebook: 'https://www.facebook.com/jan.clyde.9404',
+      email: 'jankuraido@gmail.com',
+    },
+  ];
 
   return (
     <section id="team" className="relative overflow-hidden bg-black py-16 text-white sm:py-24 lg:py-32">
@@ -47,15 +49,15 @@ export default function Team() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 flex flex-col gap-6 border-b border-white/10 pb-8 sm:mb-16 lg:mb-24 lg:flex-row lg:items-end lg:justify-between"
         >
-          <h2 className="max-w-2xl font-serif text-[2rem] font-normal italic capitalize leading-none tracking-normal text-slate-400 min-[400px]:text-4xl sm:text-5xl lg:text-6xl">
-            Know who built it.
+          <h2 className="heading-2 max-w-2xl text-white sm:text-4xl lg:text-5xl">
+            {t.team.title}
           </h2>
           <blockquote className="max-w-sm">
-            <p className="text-pretty text-sm text-slate-400 sm:text-base">
-              “We built FISH2FRESH so the market is no longer a guess. Scan the tuna, then decide.”
+            <p className="body-3 text-slate-300">
+              {t.team.quote}
             </p>
-            <footer className="mt-3 text-xs font-medium uppercase tracking-widest text-[#D4AF37]">
-              Admin
+            <footer className="caption-4 mt-3 font-semibold uppercase tracking-widest text-[#D4AF37]">
+              {t.team.admin}
             </footer>
           </blockquote>
         </motion.div>
@@ -76,19 +78,19 @@ export default function Team() {
               <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-20" />
               <div className="absolute left-4 top-4 z-20 h-8 w-8 border-l border-t border-white/20 transition-colors duration-500 group-hover:border-[#D4AF37] group-focus-within:border-[#D4AF37]" />
               <div className="absolute bottom-4 right-4 z-20 h-8 w-8 border-b border-r border-white/20 transition-colors duration-500 group-hover:border-[#D4AF37] group-focus-within:border-[#D4AF37]" />
-              <div className="absolute right-4 top-4 z-20 text-5xl font-black italic text-white/10 mix-blend-overlay sm:text-6xl">
+              <div className="absolute right-4 top-4 z-20 text-5xl font-bold text-white/10 mix-blend-overlay sm:text-6xl">
                 0{index + 1}
               </div>
 
               <div className="absolute bottom-0 left-0 z-30 flex w-full translate-y-0 flex-col justify-end p-5 opacity-100 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:translate-y-0 motion-reduce:transition-opacity sm:p-6 lg:translate-y-4 lg:p-8 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-focus-within:translate-y-0 lg:group-focus-within:opacity-100">
-                <span className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#D4AF37] sm:text-xs">
+                <span className="caption-4 mb-3 flex items-center gap-2 font-semibold uppercase tracking-widest text-[#D4AF37]">
                   <span className="h-px w-4 bg-[#D4AF37]" />
                   {member.role}
                 </span>
-                <h3 className="mb-2 text-2xl font-black uppercase leading-none tracking-tighter text-white sm:text-3xl lg:text-4xl">
+                <h3 className="heading-3 mb-2 font-bold uppercase leading-none tracking-tight text-white sm:text-3xl lg:text-4xl">
                   {member.name}
                 </h3>
-                <p className="text-sm leading-relaxed text-slate-300 sm:text-base">{member.bio}</p>
+                <p className="body-6 text-slate-300 sm:body-3">{member.bio}</p>
                 <div className="mt-4">
                   <div className="flex items-center justify-end border-t border-white/10 pt-4">
                     <div className="flex items-center gap-3 text-slate-400">
