@@ -8,6 +8,7 @@ import Species from '../components/Species';
 import VisualIndicators from '../components/VisualIndicators';
 import FAQ from '../components/FAQ';
 import Team from '../components/Team';
+import FinalCta from '../components/FinalCta';
 
 export default function Home() {
   return (
@@ -31,6 +32,7 @@ export default function Home() {
       <VisualIndicators />
       <FAQ />
       <Team />
+      <FinalCta />
     </>
   );
 }
