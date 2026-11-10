@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react';
 import {
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
   CheckCircle,
@@ -10,6 +12,8 @@ import {
   Sparkle,
   Storefront,
   Tag,
+  Warning,
+  XCircle,
 } from '@phosphor-icons/react';
 import { useLanguage } from '../context/LanguageContext';
 import { useDownload } from '../context/DownloadContext';
@@ -18,6 +22,68 @@ import { SITE_URL } from '../seo';
 import bulletImg from '../assets/images/bullet_tuna.jpg';
 import skipjackImg from '../assets/images/skipjack_tuna_1786286515562.webp';
 import yellowfinImg from '../assets/images/yellowfin_tuna.jpg';
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+type Step = {
+  label: string;
+  title: string;
+  description: string;
+};
+
+function StepTimeline({
+  steps,
+  active,
+  onSelect,
+}: {
+  steps: Step[];
+  active: number;
+  onSelect?: (index: number) => void;
+}) {
+  return (
+    <ol className="mx-auto max-w-xl text-left">
+      {steps.map((step, index) => {
+        const last = index === steps.length - 1;
+        const isActive = index === active;
+        const quiet = active >= 0 && !isActive;
+        return (
+          <li
+            key={step.label}
+            data-active={isActive ? 'true' : 'false'}
+            className={`relative pl-10 ${last ? '' : 'pb-10'} cursor-pointer select-none`}
+            onClick={() => onSelect?.(index)}
+          >
+            {!last && (
+              <span
+                className="absolute bottom-0 left-2 top-2 w-px -translate-x-1/2 bg-[#E4E4E4]"
+                aria-hidden="true"
+              />
+            )}
+            <motion.span
+              aria-hidden="true"
+              className="absolute left-2 top-1 h-4 w-4 -translate-x-1/2 rounded-full"
+              animate={{
+                scale: isActive ? 1.15 : 0.8,
+                backgroundColor: isActive ? '#181818' : '#C5C5C5',
+              }}
+              transition={{ duration: 0.5, ease: EASE }}
+            />
+            <motion.div
+              animate={{ opacity: quiet ? 0.38 : 1, y: quiet ? 6 : 0 }}
+              transition={{ duration: 0.5, ease: EASE }}
+            >
+              <p className="caption-4 text-slate-500">{step.label}</p>
+              <h3 className="title-2 mt-1.5 text-[#181818]" aria-current={isActive ? 'step' : undefined}>
+                {step.title}
+              </h3>
+              <p className="body-6 mt-1.5 text-pretty text-slate-600">{step.description}</p>
+            </motion.div>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
 
 type SpeciesCopy = {
   name: string;
@@ -155,6 +221,10 @@ export default function SpeciesDetail() {
   const { id } = useParams<{ id: string }>();
   const { language } = useLanguage();
   const { startDownload } = useDownload();
+  const reduce = useReducedMotion();
+
+  const freshnessTrackRef = useRef<HTMLDivElement>(null);
+  const [activeStep, setActiveStep] = useState(0);
 
   const resolvedId = id ? (speciesAliases[id] ?? id) : '';
   const record = speciesData[resolvedId as keyof typeof speciesData];
@@ -176,6 +246,34 @@ export default function SpeciesDetail() {
           freshness: 'Paano Tingnan ang Pagkasariwa',
           freshnessIntro: 'Bago gamitin ang FISH2FRESH scanner, suriin ang',
           freshnessOutro: 'gamit ang mga visual na palatandaang ito.',
+          classTitle: 'Mga Resulta ng Pagsusuri',
+          stepWord: 'Palatandaan',
+          stepTitles: [
+            'Pagsusuri sa Mata',
+            'Kulay ng Hasang',
+            'Katatagan ng Laman',
+            'Guhit ng Balat at Amoy',
+          ],
+          classifications: [
+            {
+              icon: CheckCircle,
+              color: 'text-emerald-600',
+              title: 'Sariwa',
+              description: 'Matambok at malinaw ang mata, matingkad na pula ang hasang, at matatag ang laman.',
+            },
+            {
+              icon: Warning,
+              color: 'text-amber-500',
+              title: 'Medyo Sariwa',
+              description: 'May bahagyang labo sa mata o bahagyang lambot sa laman, ngunit ligtas pa lutuin.',
+            },
+            {
+              icon: XCircle,
+              color: 'text-rose-500',
+              title: 'Bilasa',
+              description: 'Lubog at maputing mata, maitim o kayumangging hasang, at may maasim na amoy.',
+            },
+          ],
           otherSpecies: 'Iba Pang Sinusuportahang Isda',
           otherSpeciesDesc: 'Tingnan ang iba pang mga uri ng tuna na kayang suriin ng FISH2FRESH AI model.',
           viewDetails: 'Basahin ang buong detalye',
@@ -200,6 +298,34 @@ export default function SpeciesDetail() {
           freshness: 'How to Check Freshness',
           freshnessIntro: 'Before scanning with FISH2FRESH, you can inspect the',
           freshnessOutro: 'with these key quality indicators.',
+          classTitle: 'Condition Classifications',
+          stepWord: 'Indicator',
+          stepTitles: [
+            'Eye Clarity & Bulge',
+            'Gill Color & Slime',
+            'Flesh Firmness & Elasticity',
+            'Skin Markings & Fresh Aroma',
+          ],
+          classifications: [
+            {
+              icon: CheckCircle,
+              color: 'text-emerald-600',
+              title: 'Fresh',
+              description: 'Bright bulging eyes, scarlet-red gills, and taut elastic flesh that immediately springs back.',
+            },
+            {
+              icon: Warning,
+              color: 'text-amber-500',
+              title: 'Semi-Fresh',
+              description: 'Slight eye cloudiness or softening muscle tone. Still completely safe when cooked thoroughly.',
+            },
+            {
+              icon: XCircle,
+              color: 'text-rose-500',
+              title: 'Spoiled',
+              description: 'Sunken milky eyes, brownish gills with excess mucus, and a distinct sour or ammonia odor.',
+            },
+          ],
           otherSpecies: 'Other Supported Tuna Species',
           otherSpeciesDesc: 'Explore other species trained directly inside the FISH2FRESH on-device classification model.',
           viewDetails: 'Read full details',
@@ -210,6 +336,25 @@ export default function SpeciesDetail() {
           missingBody: 'That tuna species is not currently in the supported list.',
           home: 'Return home',
         };
+
+  const freshnessSteps: Step[] = copy
+    ? copy.freshnessMetrics.map((desc, idx) => ({
+        label: `${labels.stepWord} 0${idx + 1}`,
+        title: labels.stepTitles[idx] || `${labels.stepWord} 0${idx + 1}`,
+        description: desc,
+      }))
+    : [];
+
+  const { scrollYProgress: freshnessProgress } = useScroll({
+    target: freshnessTrackRef,
+    offset: ['start start', 'end end'],
+  });
+
+  useMotionValueEvent(freshnessProgress, 'change', (value) => {
+    if (reduce) return;
+    const next = Math.min(freshnessSteps.length - 1, Math.floor(value * freshnessSteps.length));
+    setActiveStep((current) => (current === next ? current : next));
+  });
 
   if (!record || !copy) {
     return (
@@ -243,6 +388,23 @@ export default function SpeciesDetail() {
         traits: [spCopy.size, spCopy.weight],
       };
     });
+
+  const freshnessStepsView = (
+    <div className="mx-auto w-full max-w-3xl px-6 text-center">
+      <h2 className="heading-2">{labels.freshness}</h2>
+      <p className="body-3 mx-auto mt-4 max-w-[680px] text-pretty text-slate-600">
+        {labels.freshnessIntro} <span className="font-semibold text-[#181818]">{copy.name}</span>{' '}
+        {labels.freshnessOutro}
+      </p>
+      <div className="mt-12">
+        <StepTimeline
+          steps={freshnessSteps}
+          active={reduce ? -1 : activeStep}
+          onSelect={(index) => setActiveStep(index)}
+        />
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-white text-[#181818]">
@@ -383,33 +545,34 @@ export default function SpeciesDetail() {
         </div>
       </section>
 
-      {/* ── Freshness Indicators Section ── */}
-      <section id="freshness" className="border-t border-black/10 bg-[#F6F6F6] py-16 md:py-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <Reveal>
-            <h2 className="heading-2 max-w-[680px]">{labels.freshness}</h2>
-            <p className="body-3 mt-4 max-w-[680px] text-slate-600">
-              {labels.freshnessIntro} <span className="font-semibold text-[#181818]">{copy.name}</span>{' '}
-              {labels.freshnessOutro}
-            </p>
-          </Reveal>
+      {/* ── Freshness Indicators Section (Matching HowItWorks Animation) ── */}
+      <section id="freshness" className="border-t border-black/10 bg-[#F6F6F6]">
+        {reduce ? (
+          <div className="py-16 md:py-24">{freshnessStepsView}</div>
+        ) : (
+          <div ref={freshnessTrackRef} className="relative h-[260vh]">
+            <div className="sticky top-24 flex h-[calc(100svh-6rem)] items-center">
+              {freshnessStepsView}
+            </div>
+          </div>
+        )}
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            {copy.freshnessMetrics.map((metric: string, idx: number) => (
-              <Reveal key={idx} delay={idx * 0.06}>
-                <div className="surface-card flex h-full items-start gap-4 p-6 shadow-xs">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#181818] text-white">
-                    <CheckCircle size={20} weight="fill" />
-                  </div>
-                  <div>
-                    <span className="caption-4 font-semibold text-slate-500">
-                      {language === 'fil' ? `Palatandaan 0${idx + 1}` : `Indicator 0${idx + 1}`}
-                    </span>
-                    <p className="body-6 mt-1 text-slate-800">{metric}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+        {/* Condition classifications mirroring HowItWorks */}
+        <div className="mx-auto max-w-6xl px-6 pb-16 md:pb-24">
+          <Reveal>
+            <h3 className="heading-3">{labels.classTitle}</h3>
+          </Reveal>
+          <div className="mt-6 grid gap-6 md:grid-cols-3">
+            {labels.classifications.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="rounded-lg border border-black/5 bg-white p-6 shadow-xs">
+                  <Icon size={24} className={item.color} weight="fill" />
+                  <h4 className="title-3 mt-4 text-[#181818]">{item.title}</h4>
+                  <p className="body-6 mt-2 text-pretty text-slate-600">{item.description}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -470,8 +633,8 @@ export default function SpeciesDetail() {
               onClick={startDownload}
               className="btn button-md btn-inverse mt-8 inline-flex"
             >
+              <ArrowDown size={18} weight="bold" />
               {labels.downloadBtn}
-              <ArrowRight size={18} weight="bold" />
             </button>
           </Reveal>
         </div>
