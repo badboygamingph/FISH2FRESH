@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Sparkle, ShieldCheck, WifiSlash } from '@phosphor-icons/react';
+import { ArrowDown, ShieldCheck, WifiSlash } from '@phosphor-icons/react';
 import { useLanguage } from '../context/LanguageContext';
 import { useDownload } from '../context/DownloadContext';
 import Reveal from './Reveal';
@@ -18,9 +18,6 @@ export default function FinalCta() {
       ? 'Suriin agad ang pagkasariwa ng Pirit (Bullet Tuna), Tulingan (Skipjack), at Karaw (Yellowfin) gamit ang camera ng iyong telepono. Walang internet o account na kailangan.'
       : 'Instantly verify the freshness of Bullet Tuna, Skipjack Tuna, and Yellowfin Tuna right from your phone camera. No internet or account needed.';
 
-  const badge =
-    language === 'fil' ? '100% Offline AI Scanner' : '100% Offline AI Scanner';
-
   const downloadBtn =
     language === 'fil' ? 'I-download ang App (Android)' : 'Download App (Android)';
 
@@ -33,12 +30,7 @@ export default function FinalCta() {
     <section id="download" className="bg-[#181818] py-20 text-white md:py-28">
       <div className="mx-auto max-w-4xl px-6 text-center">
         <Reveal>
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 backdrop-blur-md">
-            <Sparkle size={14} weight="fill" className="text-white" />
-            <span className="caption-4 font-semibold text-white">{badge}</span>
-          </div>
-
-          <h2 className="heading-2 mt-6 text-white text-balance">{title}</h2>
+          <h2 className="heading-2 text-white text-balance">{title}</h2>
 
           <p className="body-3 mt-4 text-white/80 max-w-[640px] mx-auto text-pretty">
             {desc}
