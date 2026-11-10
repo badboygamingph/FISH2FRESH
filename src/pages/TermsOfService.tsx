@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { SITE_URL } from '../seo';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Home } from 'lucide-react';
+import { CaretRight, House } from '@phosphor-icons/react';
 
 export default function TermsOfService() {
   const { language } = useLanguage();
@@ -29,11 +29,11 @@ export default function TermsOfService() {
         >
           {/* Breadcrumb */}
           <nav className="flex items-center text-sm text-slate-500 mb-8 mt-4">
-            <Link to="/" className="flex items-center hover:text-blue-600 transition-colors">
-              <Home size={16} className="mr-1" />
+            <Link to="/" className="flex items-center hover:text-black transition-colors">
+              <House size={16} className="mr-1.5" />
               {language === 'en' ? 'Home' : 'Home'}
             </Link>
-            <ChevronRight size={16} className="mx-2 text-slate-400" />
+            <CaretRight size={14} className="mx-2 text-slate-400" />
             <span className="text-slate-900 font-medium">
               {language === 'en' ? 'Terms of Service' : 'Mga Tuntunin ng Serbisyo'}
             </span>
