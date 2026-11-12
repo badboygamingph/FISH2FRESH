@@ -130,6 +130,23 @@
       ]
     }
     </script>
+  <script>
+    document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+    document.addEventListener('keydown', (event) => {
+      const key = event.key.toLowerCase();
+      const hasModifier = event.ctrlKey || event.metaKey;
+      const blocksInspectionShortcut =
+        event.key === 'F12' ||
+        (hasModifier && ['p', 's', 'u'].includes(key)) ||
+        (hasModifier && (event.shiftKey || event.altKey) && ['c', 'e', 'i', 'j', 'k', 'm', 's'].includes(key));
+
+      if (blocksInspectionShortcut) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }, true);
+  </script>
 </head>
 
 <body>

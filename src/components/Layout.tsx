@@ -172,7 +172,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              <nav className="flex h-full flex-col justify-center gap-2 px-8" aria-label="Mobile">
+              <nav className="flex h-full flex-col items-center justify-center gap-2 px-8 text-center" aria-label="Mobile">
                 {links.map((link, index) => (
                   <motion.a
                     key={link.id}

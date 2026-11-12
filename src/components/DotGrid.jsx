@@ -138,9 +138,9 @@ const DotGrid = ({
   mouseInteraction = true,
   clickShock = true,
   paused = false,
-  dpr,
+  dpr = undefined,
   className = '',
-  style
+  style = undefined
 }) => {
   const canvasRef = useRef(null);
   const engineRef = useRef(null);

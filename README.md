@@ -1,20 +1,29 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# FISH2FRESH Landing Page
 
-# Run and deploy your AI Studio app
+The FISH2FRESH marketing site is a React, TypeScript, and Vite application.
 
-This contains everything you need to run your app locally.
+## Requirements
 
-View your app in AI Studio: https://ai.studio/apps/effae3e1-531f-430f-90e6-71911aa6173b
+- Node.js 20 or newer
+- npm (included with Node.js)
 
-## Run Locally
+## Run locally
 
-**Prerequisites:**  Node.js
+From the project directory, install the locked dependencies and start the development server:
 
+```sh
+npm ci
+npm run dev
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Open the local URL printed by Vite (by default, `http://localhost:3000`). No API key or `.env.local` file is required.
+
+## Build and preview
+
+```sh
+npm run lint
+npm run build
+npm run preview
+```
+
+`npm run clean` removes generated build output and the optional `server.js` file.
